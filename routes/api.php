@@ -19,5 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('contactform',[ContactFormController::class ,"store"]);
-Route::post('creatorsform',[CreatorsFormController::class ,"store"]);
+Route::post('businessform', [ContactFormController::class, "store"]);
+Route::post('creatorsform', [CreatorsFormController::class, "store"]);
