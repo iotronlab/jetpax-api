@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContactForm;
+use App\Models\creatorsform;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Response;
 
-class ContactFormController extends Controller
+class CreatorsFormController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -48,19 +48,18 @@ class ContactFormController extends Controller
             'details' => 'required',
         ]);
 
-        DB::table('contact_forms')->insert($data);
+        DB::table('creatorsforms')->insert($data);
 
         return response()->json('success', 200);
-
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ContactForm  $contactForm
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(ContactForm $contactForm)
+    public function show($id)
     {
         //
     }
@@ -68,10 +67,10 @@ class ContactFormController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ContactForm  $contactForm
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ContactForm $contactForm)
+    public function edit($id)
     {
         //
     }
@@ -80,10 +79,10 @@ class ContactFormController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ContactForm  $contactForm
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ContactForm $contactForm)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -91,10 +90,10 @@ class ContactFormController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ContactForm  $contactForm
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ContactForm $contactForm)
+    public function destroy($id)
     {
         //
     }
