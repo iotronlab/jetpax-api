@@ -16,7 +16,7 @@ class CreateCreatorFormsTable extends Migration
         Schema::create('creator_forms', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
-            $table->string('email', 255);
+            $table->string('email', 255)->unique();
             $table->string('business_name', 255);
             $table->string('business_link', 255)->nullable();
             $table->string('contact', 255);
