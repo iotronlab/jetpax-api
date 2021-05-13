@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 use App\Models\BusinessForm;
 use App\Models\CreatorForm;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Response;
+
+
 
 class ContactFormController extends Controller
 {
