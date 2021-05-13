@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Providers;
-
+use App\Models\BusinessForm;
+use App\Observers\BusinessFormObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -27,6 +28,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        BusinessForm::observe(BusinessFormObserver::class);
     }
 }

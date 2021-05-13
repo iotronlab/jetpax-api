@@ -30,8 +30,7 @@ class ContactFormController extends Controller
             'details' => 'required',
         ]);
 
-        //  DB::table('contact_forms')->insert($data);
-        BusinessForm::updateOrCreate($valid_data);
+        $businessForm = BusinessForm::updateOrCreate($valid_data);
 
         return response()->json($valid_data);
     }
