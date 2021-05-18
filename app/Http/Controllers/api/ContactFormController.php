@@ -48,16 +48,15 @@ class ContactFormController extends Controller
         $valid_data = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'business_name' => 'required',
-            'business_link' => 'required',
+            'profile_name' => 'required',
+            'profile_link' => 'required',
             'contact' => 'required',
-            'service' => 'required',
-            'budget' => 'required',
+            'location' => 'required',
             'details' => 'required',
         ]);
 
         //  DB::table('contact_forms')->insert($data);
-        CreatorForm::updateOrCreate($valid_data);
+        $creatorForm = CreatorForm::updateOrCreate($valid_data);
 
         return response()->json($valid_data);
     }

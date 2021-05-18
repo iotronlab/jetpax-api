@@ -19,8 +19,8 @@ class CreateCreatorsTable extends Migration
             $table->string('email', 255)->unique();
             $table->enum('gender', ['M', 'F', 'Universal']);
             $table->string('contact', 15);
-            $table->string('display_image', 255);
-            $table->string('cover_image', 255);
+            $table->string('display_image', 255)->nullable();
+            $table->string('cover_image', 255)->nullable();
             $table->json('socials')->nullable();
             $table->json('languages')->nullable();
             $table->json('categories')->nullable();

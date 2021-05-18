@@ -17,6 +17,8 @@ use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
+use App\Orchid\Screens\Creator\CreatorEditScreen;
+use App\Orchid\Screens\Creator\CreatorListScreen;
 
 /*
 |--------------------------------------------------------------------------
@@ -108,3 +110,9 @@ Route::screen('example-cards', ExampleCardsScreen::class)->name('platform.exampl
 Route::screen('example-advanced', ExampleFieldsAdvancedScreen::class)->name('platform.example.advanced');
 
 //Route::screen('idea', 'Idea::class','platform.screens.idea');
+
+Route::screen('creator/{creator?}',CreatorEditScreen::class)
+    ->name('platform.creator.edit');
+
+Route::screen('creators', CreatorListScreen::class)
+    ->name('platform.creator.list');

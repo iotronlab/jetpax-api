@@ -17,11 +17,10 @@ class CreateCreatorFormsTable extends Migration
             $table->id();
             $table->string('name', 255);
             $table->string('email', 255)->unique();
-            $table->string('business_name', 255);
-            $table->string('business_link', 255)->nullable();
+            $table->string('profile_name', 255);
+            $table->string('profile_link', 255);
             $table->string('contact', 255);
-            $table->string('service', 255);
-            $table->string('budget', 255);
+            $table->string('location', 255);
             $table->text('details', 255)->nullable();
             $table->timestamps();
         });
