@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\ContactFormController;
 use App\Http\Controllers\CreatorController;
+use App\Http\Controllers\FilterController;
 use App\Models\Creator;
 
 /*
@@ -26,3 +27,4 @@ Route::post('creatorform', [ContactFormController::class, "uploadCreatorForm"]);
 
 Route::get('creator', [CreatorController::class, "index"]);
 // Route::get('creator/{follower}', [CreatorController::class, "show"]);
+Route::get('filter',[FilterController::class,"index"]);

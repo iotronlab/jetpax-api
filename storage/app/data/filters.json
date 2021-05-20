@@ -1,0 +1,69 @@
+[
+    {
+        "code": "languages",
+        "admin_name": "Language",
+        "options": [{
+            "admin_name" : "English"
+        },
+        {
+            "admin_name" : "Hindi"
+        }
+        ]
+    },
+    {
+        "code": "categories",
+        "admin_name": "Categories",
+        "options": [{
+            "admin_name": "Health and Fitness"
+        },
+        {
+            "admin_name": "Beauty and Cosmetics"
+        },
+        {
+            "admin_name": "Travel"
+        },
+        {
+            "admin_name": "Food"
+        },
+        {
+            "admin_name": "Gaming and Technology"
+        },
+        {
+            "admin_name": "Automobile"
+        },
+        {
+            "admin_name": "Education"
+        },
+        {
+            "admin_name": "Entertainment"
+        },
+        {
+            "admin_name": "Others"
+        }]
+    },
+    {
+        "code": "followers",
+        "admin_name": "Followers",
+        "options": [{
+            "admin_name": "10K+ followers"
+        },
+        {
+            "admin_name": "20K+ followers"
+        },
+        {
+            "admin_name": "30K+ followers"
+        },
+        {
+            "admin_name": "40K+ followers"
+        },
+        {
+            "admin_name": "50K+ followers"
+        },
+        {
+            "admin_name": "100K+ followers"
+        }]
+    }
+
+
+
+]

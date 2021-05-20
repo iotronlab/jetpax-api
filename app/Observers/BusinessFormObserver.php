@@ -15,6 +15,7 @@ class BusinessFormObserver
      */
     public function created(BusinessForm $businessForm)
     {
+       
         $businessForm->notify(new BusinessFormNotification());
 
     }
@@ -28,6 +29,7 @@ class BusinessFormObserver
     public function updated(BusinessForm $businessForm)
     {
         //
+        $businessForm->notify(new BusinessFormNotification());
     }
 
     /**

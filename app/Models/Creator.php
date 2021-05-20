@@ -34,10 +34,5 @@ class Creator extends Model
         'categories' => 'array'
     ];
 
-    
 
-    public function scopeFollowers($query)
-    {
-        return $query->where('max_followers', '>=', 10);
-    }
 }

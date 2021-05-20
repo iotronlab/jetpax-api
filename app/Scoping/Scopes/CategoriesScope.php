@@ -5,7 +5,7 @@ namespace App\Scoping\Scopes;
 use App\Scoping\Contracts\Scope;
 use Illuminate\Database\Eloquent\Builder;
 
-class LanguagesScope implements Scope
+class CategoriesScope implements Scope
 {
     public function apply(Builder $builder, $value)
     {
@@ -13,6 +13,6 @@ class LanguagesScope implements Scope
 
         //     $builder->whereIn('url', explode(',', $value));
         // });
-        return $builder->whereJsonContains('languages',explode(',', $value));
+        return $builder->whereJsonContains('categories',explode(',', $value));
     }
 }
