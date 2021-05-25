@@ -160,7 +160,6 @@ class CreatorEditScreen extends Screen
     public function remove(Creator $creator)
     {
         $creator->delete();
-
         Alert::info('You have successfully deleted the post.');
 
         return redirect()->route('platform.creator.list');

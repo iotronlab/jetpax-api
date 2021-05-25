@@ -18,7 +18,7 @@ class CreatePortfoliosTable extends Migration
             $table->string('name');
             $table->string('client_brief');
             $table->string('project_description');
-            $table->json('tools');
+            $table->json('tools')->nullable();
             $table->json('images');
             $table->text('typography');
             $table->text('palette');

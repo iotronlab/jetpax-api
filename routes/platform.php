@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 use App\Orchid\Screens\Creator\CreatorEditScreen;
 use App\Orchid\Screens\Creator\CreatorListScreen;
+use App\Orchid\Screens\Filter\FilterEditScreen;
+use App\Orchid\Screens\Filter\FilterListScreen;
+use App\Orchid\Screens\Portfolio\PortfolioEditScreen;
+use App\Orchid\Screens\Portfolio\PortfolioListScreen;
 
 /*
 |--------------------------------------------------------------------------
@@ -116,3 +120,15 @@ Route::screen('creator/{creator?}',CreatorEditScreen::class)
 
 Route::screen('creators', CreatorListScreen::class)
     ->name('platform.creator.list');
+
+Route::screen('filter/{filter?}', FilterEditScreen::class)
+    ->name('platform.filter.edit');
+
+Route::screen('filters', FilterListScreen::class)
+    ->name('platform.filter.list');
+
+Route::screen('portfolio/{portfolio?}', PortfolioEditScreen::class)
+    ->name('platform.portfolio.edit');
+
+Route::screen('portfolios', PortfolioListScreen::class)
+    ->name('platform.portfolio.list');
