@@ -3,12 +3,9 @@
 namespace App\Observers;
 
 use App\Models\Portfolio\Portfolio;
-
+use Orchid\Attachment\Attachable;
 class PortfolioObserver
 {
     //
-    public function deleting(Portfolio $portfolio)
-    {
-        $portfolio->attachment->each->delete();
-    }
+    
 }

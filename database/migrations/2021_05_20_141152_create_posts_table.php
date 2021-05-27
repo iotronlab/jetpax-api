@@ -18,7 +18,7 @@ class CreatePostsTable extends Migration
             $table->string('type');
             $table->string('name');
             $table->string('content');
-            $table->string('portfolio_id');
+            $table->unsignedBigInteger('portfolio_id');
             $table->json('images');
             $table->timestamps();
 

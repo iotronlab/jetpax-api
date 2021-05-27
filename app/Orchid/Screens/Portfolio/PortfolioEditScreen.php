@@ -5,10 +5,13 @@ namespace App\Orchid\Screens\Portfolio;
 use App\Models\Portfolio\Portfolio;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\Cropper;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Screen;
+use Orchid\Screen\Sight;
 use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
 
@@ -40,12 +43,13 @@ class PortfolioEditScreen extends Screen
         if($this->exists){
             $this->name = 'Edit Portfolio';
         }
-
-        // $portfolio->load('attachment');
-        // dd($portfolio->images);
-        $portfolio->attachment($portfolio->images)->get();
+        // $posts = $portfolio->posts;
+        // dd($posts);
+        $portfolio->load(['attachment', 'posts']);
+        // dd($portfolio);
         return [
-            'portfolio' => $portfolio
+            'portfolio' => $portfolio,
+            'posts' => $portfolio->posts
         ];
     }
 
@@ -57,20 +61,26 @@ class PortfolioEditScreen extends Screen
     public function commandBar(): array
     {
         return [
-            Button::make('Create Creator')
-                ->icon('pencil')
-                ->method('createOrUpdate')
-                ->canSee(!$this->exists),
+            Button::make('Create Portfolio')
+                    ->icon('pencil')
+                    ->method('createOrUpdate')
+                    ->canSee(!$this->exists),
 
             Button::make('Update')
-                ->icon('note')
-                ->method('createOrUpdate')
-                ->canSee($this->exists),
+                    ->icon('note')
+                    ->method('createOrUpdate')
+                    ->canSee($this->exists),
 
             Button::make('Remove')
-                ->icon('trash')
-                ->method('remove')
-                ->canSee($this->exists),
+                    ->icon('trash')
+                    ->method('remove')
+                    ->canSee($this->exists),
+
+            ModalToggle::make('Add Post')
+                        ->modal('postModal')
+                        ->method('createPost')
+                        ->icon('full-screen')
+                        ->canSee($this->exists),
             ];
     }
 
@@ -104,17 +114,36 @@ class PortfolioEditScreen extends Screen
                     ->title('Palette')
                     ->placeholder('Enter palette'),
 
-                Cropper::make('portfolio.image')
-                    ->title('Enter image')
-                    ->width(500)
-                    ->height(300)
-                    ->horizontal(),
-
-                Upload::make('portfolio.images')
+                Upload::make('portfolio.attachment')
                     ->title('Upload multiple images')
                     ->horizontal(),
+            ]),
 
-            ])
+            Layout::modal('postModal', [
+                Layout::rows([
+                    Input::make('post.type')
+                            ->title('Type')
+                            ->placeholder('Enter type'),
+
+                    Input::make('post.name')
+                            ->title('Name')
+                            ->placeholder('Enter name'),
+
+                    Input::make('post.content')
+                            ->title('Content')
+                            ->placeholder('Enter content'),
+
+                    Upload::make('post.images')
+                            ->title('Upload multiple images')
+                            ->horizontal(),
+                ])
+            ])->title('Add a Post'),
+
+            Layout::legend('posts', [
+                Sight::make('type'),
+                Sight::make('name'),
+                Sight::make('content'),
+            ]),
         ];
     }
 
@@ -127,18 +156,42 @@ class PortfolioEditScreen extends Screen
 
     public function createOrUpdate(Portfolio $portfolio, Request $request)
     {
+
         $data = $request->get('portfolio');
-        $data['images'] = json_encode($data['images']);
+        $data['images'] = $data['attachment'];
         $portfolio->fill($data)->save();
 
         $portfolio->attachment()->syncWithoutDetaching(
             $request->input('portfolio.attachment', [])
         );
 
+
         Alert::info('You have successfully created an portfolio.');
 
         return redirect()->route('platform.portfolio.list');
     }
+
+    /**
+     * @param Portfolio    $portfolio
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+     public function createPost(Portfolio $portfolio, Request $request)
+     {
+
+        $data = $request->get('post');
+        $portfolio->posts()->updateOrCreate($data);
+        $portfolio->attachment()->syncWithoutDetaching(
+            $request->input('post.images', [])
+        );
+
+        Alert::info('You have successfully created an post.');
+
+        return redirect()->route('platform.portfolio.list');
+
+     }
 
     /**
      * @param Portolio $portfolio
@@ -147,7 +200,8 @@ class PortfolioEditScreen extends Screen
      * @throws \Exception
      */
     public function remove(Portfolio $portfolio)
-    {   
+    {
+        $portfolio->attachment()->delete();
         $portfolio->delete();
 
         Alert::info('You have successfully deleted the post.');

@@ -22,7 +22,6 @@ class CreatePortfoliosTable extends Migration
             $table->json('images');
             $table->text('typography');
             $table->text('palette');
-            $table->string('image');
 
             $table->timestamps();
         });

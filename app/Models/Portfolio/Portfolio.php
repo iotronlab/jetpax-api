@@ -2,6 +2,7 @@
 
 namespace App\Models\Portfolio;
 
+use App\Models\Attachment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Orchid\Attachment\Attachable;
@@ -22,16 +23,16 @@ class Portfolio extends Model
         'images',
         'typography',
         'palette',
-        'image',
     ];
 
     protected $casts = [
-        'tools',
-        'images'
+        'tools' => 'array',
+        'images' => 'array'
     ];
 
-    public function images()
+
+    public function posts()
     {
-        return $this->hasMany(Attachment::class, 'id', 'images');
+        return $this->hasMany(Post::class);
     }
 }
