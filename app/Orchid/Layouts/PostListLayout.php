@@ -2,12 +2,11 @@
 
 namespace App\Orchid\Layouts;
 
-use App\Models\Portfolio\Portfolio;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
-class PortfolioListLayout extends Table
+class PostListLayout extends Table
 {
     /**
      * Data source.
@@ -17,7 +16,7 @@ class PortfolioListLayout extends Table
      *
      * @var string
      */
-    protected $target = 'portfolios';
+    protected $target = 'posts';
 
     /**
      * Get the table cells to be displayed.
@@ -28,11 +27,17 @@ class PortfolioListLayout extends Table
     {
         return [
             TD::make('name', 'Name')
-                ->render(function ( $portfolio) {
-                    return Link::make($portfolio->name)
-                        ->route('platform.portfolio.edit', $portfolio);
+                ->render(function ( $post) {
+                    return Link::make($post->name)
+                        ->route('platform.post.edit', $post);
                 }),
-            TD::make('client_brief', 'Client Brief'),
+            TD::make('content', 'Content'),
+            TD::make('portfolio_id', 'Portfolio ID'),
+            // TD::make('images', 'Images')
+            //     ->render(function ($post){
+            //         return $post->attachment();
+            //     }),
+
         ];
     }
 }

@@ -23,6 +23,8 @@ use App\Orchid\Screens\Filter\FilterEditScreen;
 use App\Orchid\Screens\Filter\FilterListScreen;
 use App\Orchid\Screens\Portfolio\PortfolioEditScreen;
 use App\Orchid\Screens\Portfolio\PortfolioListScreen;
+use App\Orchid\Screens\Post\PostEditScreen;
+use App\Orchid\Screens\Post\PostListScreen;
 
 /*
 |--------------------------------------------------------------------------
@@ -133,8 +135,8 @@ Route::screen('portfolio/{portfolio?}', PortfolioEditScreen::class)
 Route::screen('portfolios', PortfolioListScreen::class)
     ->name('platform.portfolio.list');
 
-Route::screen('post/{post?}', PortfolioEditScreen::class)
+Route::screen('post/{post?}', PostEditScreen::class)
     ->name('platform.post.edit');
 
-Route::screen('posts', PortfolioListScreen::class)
+Route::screen('posts', PostListScreen::class)
     ->name('platform.post.list');

@@ -38,7 +38,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('code')
                 ->list([
                     Menu::make('Portfolio')->icon('bag')->route('platform.portfolio.list'),
-                    Menu::make('Posts')->icon('heart')->route('platform.posts.list'),
+                    Menu::make('Posts')->icon('heart')->route('platform.post.list'),
                 ]),
 
             Menu::make('Basic Elements')

@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens\Portfolio;
 
 use App\Models\Portfolio\Portfolio;
+use App\Models\Portfolio\Post;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\ModalToggle;
@@ -36,10 +37,10 @@ class PortfolioEditScreen extends Screen
      *
      * @return array
      */
-    public function query(Portfolio $portfolio): array
+    public function query(Portfolio $portfolio, Post $posts): array
     {
         $this->exists = $portfolio->exists;
-
+        $this->portfolio = $portfolio;
         if ($this->exists) {
             $this->name = 'Edit Your Portfolio';
             $portfolio->load(['attachment', 'posts']);
@@ -50,7 +51,7 @@ class PortfolioEditScreen extends Screen
         // dd($portfolio);
         return [
             'portfolio' => $portfolio,
-            'posts' => $portfolio->posts
+            'posts' => $posts
         ];
     }
 
@@ -94,6 +95,7 @@ class PortfolioEditScreen extends Screen
     {
         return [
             Layout::rows([
+
                 Input::make('portfolio.name')
                     ->title('Name')
                     ->placeholder('Enter your name')
@@ -113,31 +115,27 @@ class PortfolioEditScreen extends Screen
                     ->horizontal()->canSee($this->exists),
             ]),
 
-            // Layout::modal('postModal', [
-            //     Layout::rows([
-            //         Input::make('post.type')
-            //                 ->title('Type')
-            //                 ->placeholder('Enter type'),
+            Layout::modal('postModal', [
+                Layout::rows([
 
-            //         Input::make('post.name')
-            //                 ->title('Name')
-            //                 ->placeholder('Enter name'),
+                    Input::make('post.name')
+                            ->title('Name')
+                            ->placeholder('Enter name'),
 
-            //         Input::make('post.content')
-            //                 ->title('Content')
-            //                 ->placeholder('Enter content'),
+                    Input::make('post.content')
+                            ->title('Content')
+                            ->placeholder('Enter content'),
 
-            //         Upload::make('post.images')
-            //                 ->title('Upload multiple images')
-            //                 ->horizontal(),
-            //     ])
-            // ])->title('Add a Post'),
+                    Upload::make('post.images')
+                            ->title('Upload multiple images')
+                            ->horizontal(),
+                ])
+            ])->title('Add a Post'),
 
             // Layout::legend('posts', [
-            //     Sight::make('type'),
             //     Sight::make('name'),
             //     Sight::make('content'),
-            // ]),
+            // ])->canSee($this->exists),
         ];
     }
 
@@ -199,7 +197,7 @@ class PortfolioEditScreen extends Screen
         $portfolio->attachment()->delete();
         $portfolio->delete();
 
-        Alert::info('You have successfully deleted the post.');
+        Alert::info('You have successfully deleted the portfolio.');
 
         return redirect()->route('platform.portfolio.list');
     }
