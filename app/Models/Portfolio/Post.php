@@ -10,12 +10,12 @@ use Orchid\Screen\AsSource;
 class Post extends Model
 {
     use HasFactory;
-    use AsSource,Attachable;
+    use AsSource, Attachable;
 
     protected $table = 'posts';
 
     protected $fillable = [
-        'type',
+
         'name',
         'content',
         'portfolio_id',

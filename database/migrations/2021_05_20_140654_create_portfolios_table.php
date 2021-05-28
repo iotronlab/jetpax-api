@@ -16,12 +16,11 @@ class CreatePortfoliosTable extends Migration
         Schema::create('portfolios', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('client_brief');
-            $table->string('project_description');
+            $table->text('client_brief');
+            $table->text('project_description');
             $table->json('tools')->nullable();
-            $table->json('images');
-            $table->text('typography');
-            $table->text('palette');
+            $table->json('images')->nullable();
+
 
             $table->timestamps();
         });

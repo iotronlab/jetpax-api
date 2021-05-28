@@ -115,7 +115,7 @@ Route::screen('example-advanced', ExampleFieldsAdvancedScreen::class)->name('pla
 
 //Route::screen('idea', 'Idea::class','platform.screens.idea');
 
-Route::screen('creator/{creator?}',CreatorEditScreen::class)
+Route::screen('creator/{creator?}', CreatorEditScreen::class)
     ->name('platform.creator.edit');
 
 Route::screen('creators', CreatorListScreen::class)
@@ -132,3 +132,9 @@ Route::screen('portfolio/{portfolio?}', PortfolioEditScreen::class)
 
 Route::screen('portfolios', PortfolioListScreen::class)
     ->name('platform.portfolio.list');
+
+Route::screen('post/{post?}', PortfolioEditScreen::class)
+    ->name('platform.post.edit');
+
+Route::screen('posts', PortfolioListScreen::class)
+    ->name('platform.post.list');

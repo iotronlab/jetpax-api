@@ -22,14 +22,14 @@ class PortfolioEditScreen extends Screen
      *
      * @var string
      */
-    public $name = 'PortfolioEditScreen';
+    public $name = 'Create New Portfolio';
 
     /**
      * Display header description.
      *
      * @var string|null
      */
-    public $description = 'PortfolioEditScreen';
+    public $description = 'Create a new entry in your portfolio';
 
     /**
      * Query data.
@@ -40,12 +40,13 @@ class PortfolioEditScreen extends Screen
     {
         $this->exists = $portfolio->exists;
 
-        if($this->exists){
-            $this->name = 'Edit Portfolio';
+        if ($this->exists) {
+            $this->name = 'Edit Your Portfolio';
+            $portfolio->load(['attachment', 'posts']);
         }
         // $posts = $portfolio->posts;
         // dd($posts);
-        $portfolio->load(['attachment', 'posts']);
+
         // dd($portfolio);
         return [
             'portfolio' => $portfolio,
@@ -62,26 +63,26 @@ class PortfolioEditScreen extends Screen
     {
         return [
             Button::make('Create Portfolio')
-                    ->icon('pencil')
-                    ->method('createOrUpdate')
-                    ->canSee(!$this->exists),
+                ->icon('pencil')
+                ->method('createOrUpdate')
+                ->canSee(!$this->exists),
 
             Button::make('Update')
-                    ->icon('note')
-                    ->method('createOrUpdate')
-                    ->canSee($this->exists),
+                ->icon('note')
+                ->method('createOrUpdate')
+                ->canSee($this->exists),
 
             Button::make('Remove')
-                    ->icon('trash')
-                    ->method('remove')
-                    ->canSee($this->exists),
+                ->icon('trash')
+                ->method('remove')
+                ->canSee($this->exists),
 
             ModalToggle::make('Add Post')
-                        ->modal('postModal')
-                        ->method('createPost')
-                        ->icon('full-screen')
-                        ->canSee($this->exists),
-            ];
+                ->modal('postModal')
+                ->method('createPost')
+                ->icon('full-screen')
+                ->canSee($this->exists),
+        ];
     }
 
     /**
@@ -106,44 +107,37 @@ class PortfolioEditScreen extends Screen
                     ->title('Description')
                     ->placeholder('Enter description'),
 
-                Input::make('portfolio.typography')
-                    ->title('Typography')
-                    ->placeholder('Enter typography'),
-
-                Input::make('portfolio.palette')
-                    ->title('Palette')
-                    ->placeholder('Enter palette'),
 
                 Upload::make('portfolio.attachment')
                     ->title('Upload multiple images')
-                    ->horizontal(),
+                    ->horizontal()->canSee($this->exists),
             ]),
 
-            Layout::modal('postModal', [
-                Layout::rows([
-                    Input::make('post.type')
-                            ->title('Type')
-                            ->placeholder('Enter type'),
+            // Layout::modal('postModal', [
+            //     Layout::rows([
+            //         Input::make('post.type')
+            //                 ->title('Type')
+            //                 ->placeholder('Enter type'),
 
-                    Input::make('post.name')
-                            ->title('Name')
-                            ->placeholder('Enter name'),
+            //         Input::make('post.name')
+            //                 ->title('Name')
+            //                 ->placeholder('Enter name'),
 
-                    Input::make('post.content')
-                            ->title('Content')
-                            ->placeholder('Enter content'),
+            //         Input::make('post.content')
+            //                 ->title('Content')
+            //                 ->placeholder('Enter content'),
 
-                    Upload::make('post.images')
-                            ->title('Upload multiple images')
-                            ->horizontal(),
-                ])
-            ])->title('Add a Post'),
+            //         Upload::make('post.images')
+            //                 ->title('Upload multiple images')
+            //                 ->horizontal(),
+            //     ])
+            // ])->title('Add a Post'),
 
-            Layout::legend('posts', [
-                Sight::make('type'),
-                Sight::make('name'),
-                Sight::make('content'),
-            ]),
+            // Layout::legend('posts', [
+            //     Sight::make('type'),
+            //     Sight::make('name'),
+            //     Sight::make('content'),
+            // ]),
         ];
     }
 
@@ -158,13 +152,15 @@ class PortfolioEditScreen extends Screen
     {
 
         $data = $request->get('portfolio');
-        $data['images'] = $data['attachment'];
+        // $data['images'] = $data['attachment'];
         $portfolio->fill($data)->save();
+        $images = $request->input('portfolio.attachment', []);
 
-        $portfolio->attachment()->syncWithoutDetaching(
-            $request->input('portfolio.attachment', [])
-        );
-
+        if ($images) {
+            $portfolio->attachment()->syncWithoutDetaching(
+                $images
+            );
+        }
 
         Alert::info('You have successfully created an portfolio.');
 
@@ -178,8 +174,8 @@ class PortfolioEditScreen extends Screen
      * @return \Illuminate\Http\RedirectResponse
      */
 
-     public function createPost(Portfolio $portfolio, Request $request)
-     {
+    public function createPost(Portfolio $portfolio, Request $request)
+    {
 
         $data = $request->get('post');
         $portfolio->posts()->updateOrCreate($data);
@@ -190,8 +186,7 @@ class PortfolioEditScreen extends Screen
         Alert::info('You have successfully created an post.');
 
         return redirect()->route('platform.portfolio.list');
-
-     }
+    }
 
     /**
      * @param Portolio $portfolio
@@ -208,5 +203,4 @@ class PortfolioEditScreen extends Screen
 
         return redirect()->route('platform.portfolio.list');
     }
-
 }

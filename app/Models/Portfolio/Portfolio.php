@@ -21,8 +21,7 @@ class Portfolio extends Model
         'project_description',
         'tools',
         'images',
-        'typography',
-        'palette',
+
     ];
 
     protected $casts = [
