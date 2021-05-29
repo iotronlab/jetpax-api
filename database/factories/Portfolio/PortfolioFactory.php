@@ -1,11 +1,9 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Portfolio;
 
-use App\Models\Model;
 use App\Models\Portfolio\Portfolio;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
 class PortfolioFactory extends Factory
@@ -29,7 +27,8 @@ class PortfolioFactory extends Factory
             'client_brief'              => Str::random(15),
             'project_description'       => Str::random(30),
             'typography'                => Str::random(7),
-            'pallete'                   => Str::random(5),
+            'palette'                   => Str::random(5),
+            'images'                    => "[]",
         ];
     }
 }

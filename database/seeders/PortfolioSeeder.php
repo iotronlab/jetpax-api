@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Portfolio\Portfolio;
+use App\Models\Portfolio\Post;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 class PortfolioSeeder extends Seeder
@@ -14,19 +15,10 @@ class PortfolioSeeder extends Seeder
      */
     public function run()
     {
-        // Portfolio::factory()
-        //         ->times(5)
-        //         ->create();
+        Portfolio::factory()
+                ->times(5)
+                ->has(Post::factory()->count(3),'posts')
+                ->create();
 
-        for($i =0; $i<5;$i++){
-            Portfolio::create(array(
-                'name'                      => Str::random(10),
-            'client_brief'              => Str::random(15),
-            'project_description'       => Str::random(30),
-            'typography'                => Str::random(7),
-            'palette'                   => Str::random(5),
-            'images'                    => []
-            ));
-        }
     }
 }
