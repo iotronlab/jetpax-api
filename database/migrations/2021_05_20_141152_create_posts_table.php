@@ -15,7 +15,7 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
+
             $table->string('name');
             $table->text('content');
             $table->unsignedBigInteger('portfolio_id');
@@ -25,7 +25,7 @@ class CreatePostsTable extends Migration
 
             $table->timestamps();
 
-            $table->foreign('portfolio_id')->references('id')->on('portfolios');
+            $table->foreign('portfolio_id')->references('id')->on('portfolios')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -16,7 +16,7 @@ class FilterOption extends Model
         'filter_code',
         'order'
     ];
-    
+
     public function filter()
     {
         return $this->belongsTo(Filter::class, 'filter_code', 'code');
