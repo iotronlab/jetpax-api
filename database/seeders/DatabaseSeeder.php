@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CreatorSeeder::class,
             CategorySeeder::class,
+            PortfolioSeeder::class,
         ]);
     }
 }

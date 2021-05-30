@@ -19,6 +19,12 @@ use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 use App\Orchid\Screens\Creator\CreatorEditScreen;
 use App\Orchid\Screens\Creator\CreatorListScreen;
+use App\Orchid\Screens\Filter\FilterEditScreen;
+use App\Orchid\Screens\Filter\FilterListScreen;
+use App\Orchid\Screens\Portfolio\PortfolioEditScreen;
+use App\Orchid\Screens\Portfolio\PortfolioListScreen;
+use App\Orchid\Screens\Post\PostEditScreen;
+use App\Orchid\Screens\Post\PostListScreen;
 
 /*
 |--------------------------------------------------------------------------
@@ -111,8 +117,26 @@ Route::screen('example-advanced', ExampleFieldsAdvancedScreen::class)->name('pla
 
 //Route::screen('idea', 'Idea::class','platform.screens.idea');
 
-Route::screen('creator/{creator?}',CreatorEditScreen::class)
+Route::screen('creator/{creator?}', CreatorEditScreen::class)
     ->name('platform.creator.edit');
 
 Route::screen('creators', CreatorListScreen::class)
     ->name('platform.creator.list');
+
+Route::screen('filter/{filter?}', FilterEditScreen::class)
+    ->name('platform.filter.edit');
+
+Route::screen('filters', FilterListScreen::class)
+    ->name('platform.filter.list');
+
+Route::screen('portfolio/{portfolio?}', PortfolioEditScreen::class)
+    ->name('platform.portfolio.edit');
+
+Route::screen('portfolios', PortfolioListScreen::class)
+    ->name('platform.portfolio.list');
+
+Route::screen('post/{post?}', PostEditScreen::class)
+    ->name('platform.post.edit');
+
+Route::screen('posts', PostListScreen::class)
+    ->name('platform.post.list');

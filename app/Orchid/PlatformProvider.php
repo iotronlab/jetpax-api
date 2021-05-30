@@ -34,11 +34,11 @@ class PlatformProvider extends OrchidServiceProvider
                     return 6;
                 }),
 
-            Menu::make('Dropdown menu')
+            Menu::make('Portfolio')
                 ->icon('code')
                 ->list([
-                    Menu::make('Sub element item 1')->icon('bag'),
-                    Menu::make('Sub element item 2')->icon('heart'),
+                    Menu::make('Portfolio')->icon('bag')->route('platform.portfolio.list'),
+                    Menu::make('Posts')->icon('heart')->route('platform.post.list'),
                 ]),
 
             Menu::make('Basic Elements')

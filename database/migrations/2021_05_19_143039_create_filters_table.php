@@ -15,7 +15,7 @@ class CreateFiltersTable extends Migration
     {
         Schema::create('filters', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->index();
+            $table->string('code')->unique()->index();
             $table->string('admin_name');
             $table->string('order')->nullable();
             $table->timestamps();

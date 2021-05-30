@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\FilterResource;
 use App\Models\Filter\Filter;
+use App\Models\Filter\FilterOption;
 use Illuminate\Http\Request;
 
 class FilterController extends Controller

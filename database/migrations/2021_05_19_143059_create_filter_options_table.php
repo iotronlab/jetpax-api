@@ -18,7 +18,7 @@ class CreateFilterOptionsTable extends Migration
             $table->string('admin_name');
             $table->string('order')->nullable();
             $table->string('filter_code');
-            $table->foreign('filter_code')->references('code')->on('filters')->onDelete('cascade');
+            $table->foreign('filter_code')->references('code')->on('filters')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
