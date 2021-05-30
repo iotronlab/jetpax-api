@@ -14,13 +14,14 @@ class CreatorResource extends JsonResource
      */
     public function toArray($request)
     {
-        return[
+        return [
             'id'                => $this->id,
             'name'              => $this->name,
             'email'             => $this->email,
             'gender'            => $this->gender,
             'max_follower'      => $this->max_followers,
             'language'          => $this->languages,
+            'lang'          => $this->lang,
             'category'          => $this->categories,
         ];
     }

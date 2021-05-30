@@ -1,27 +1,27 @@
 <?php
 
-namespace App\Orchid\Screens\Creator;
+namespace App\Orchid\Screens\Portfolio;
 
-use Orchid\Screen\Screen;
-use App\Orchid\Layouts\CreatorListLayout;
-use App\Models\Creator;
+use App\Models\Portfolio\Portfolio;
+use App\Orchid\Layouts\PortfolioListLayout;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Screen;
 
-class CreatorListScreen extends Screen
+class PortfolioListScreen extends Screen
 {
     /**
      * Display header name.
      *
      * @var string
      */
-    public $name = 'Creator List';
+    public $name = 'Portfolio List';
 
     /**
      * Display header description.
      *
      * @var string|null
      */
-    public $description = 'List of creators/influencers';
+    public $description = 'List of all your projects.';
 
     /**
      * Query data.
@@ -31,23 +31,24 @@ class CreatorListScreen extends Screen
     public function query(): array
     {
         return [
-            'creators' => Creator::paginate()
+            'portfolios' => Portfolio::paginate()
         ];
     }
 
     /**
      * Button commands.
      *
-     * @return Link[]
+     * @return \Orchid\Screen\Action[]
      */
     public function commandBar(): array
     {
         return [
-            Link::make('Create new')
+            Link::make('Create new Portfolio')
                 ->icon('pencil')
-                ->route('platform.creator.edit')
+                ->route('platform.portfolio.edit')
         ];
     }
+
     /**
      * Views.
      *
@@ -56,7 +57,7 @@ class CreatorListScreen extends Screen
     public function layout(): array
     {
         return [
-            CreatorListLayout::class
+            PortfolioListLayout::class
         ];
     }
 }

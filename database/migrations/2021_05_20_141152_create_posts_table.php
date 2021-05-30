@@ -17,9 +17,12 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->string('type');
             $table->string('name');
-            $table->string('content');
-            $table->string('portfolio_id');
-            $table->json('images');
+            $table->text('content');
+            $table->unsignedBigInteger('portfolio_id');
+            $table->json('images')->nullable();
+            $table->json('meta')->nullable();
+            $table->json('external_url')->nullable();
+
             $table->timestamps();
 
             $table->foreign('portfolio_id')->references('id')->on('portfolios');

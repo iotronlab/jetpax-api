@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePortfoliosTable extends Migration
+class CreateSystemDataOptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,11 @@ class CreatePortfoliosTable extends Migration
      */
     public function up()
     {
-        Schema::create('portfolios', function (Blueprint $table) {
+        Schema::create('system_data_options', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('client_brief');
-            $table->text('project_description');
-            $table->json('tools')->nullable();
-            $table->json('images')->nullable();
-            $table->json('meta')->nullable();
-            $table->json('external_url')->nullable();
-
-
+            $table->string('system_data_code');
+            $table->foreign('system_data_code')->references('code')->on('system_data')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -35,6 +29,6 @@ class CreatePortfoliosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('portfolios');
+        Schema::dropIfExists('system_data_options');
     }
 }

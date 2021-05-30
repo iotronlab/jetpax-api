@@ -11,18 +11,20 @@ use Illuminate\Http\Request;
 
 class CreatorController extends Controller
 {
-    public function index(){
-        return CreatorResource::collection(
-            Creator::withScopes($this->scopes())->paginate(10)
-        );
+    public function index()
+    {
+        // return CreatorResource::collection(
+        //     Creator::withScopes($this->scopes())->paginate(10)
+        // );
+        return Creator::with('lang')->get();
     }
 
-    protected function scopes() {
+    protected function scopes()
+    {
         return [
             'followers' => new FollowersScope(),
             'languages' => new LanguagesScope(),
             'categories' => new CategoriesScope(),
         ];
     }
-
 }

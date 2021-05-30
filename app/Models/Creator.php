@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Filter\FilterOption;
 use App\Models\Traits\CanBeScoped;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Orchid\Screen\AsSource;
 use Orchid\Attachment\Attachable;
+use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Orchid\Attachment\Models\Attachment;
+
 
 class Creator extends Model
 {
@@ -29,10 +32,12 @@ class Creator extends Model
     ];
 
     protected $casts = [
-        'socials' => 'array',
-        'languages' => 'array',
+        'socials' => AsCollection::class,
+        'languages' => AsCollection::class,
         'categories' => 'array'
     ];
-
-
+    public function lang()
+    {
+        return $this->hasMany(FilterOption::class, 'id', 'languages');
+    }
 }

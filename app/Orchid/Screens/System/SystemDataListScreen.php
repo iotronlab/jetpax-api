@@ -1,27 +1,27 @@
 <?php
 
-namespace App\Orchid\Screens\Creator;
+namespace App\Orchid\Screens\System;
 
-use Orchid\Screen\Screen;
-use App\Orchid\Layouts\CreatorListLayout;
-use App\Models\Creator;
+use App\Models\System\SystemData;
+use App\Orchid\Layouts\SystemDataListLayout;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Screen;
 
-class CreatorListScreen extends Screen
+class SystemDataListScreen extends Screen
 {
     /**
      * Display header name.
      *
      * @var string
      */
-    public $name = 'Creator List';
+    public $name = 'SystemData List';
 
     /**
      * Display header description.
      *
      * @var string|null
      */
-    public $description = 'List of creators/influencers';
+    public $description = 'You can update the system data here.';
 
     /**
      * Query data.
@@ -30,24 +30,27 @@ class CreatorListScreen extends Screen
      */
     public function query(): array
     {
+        $systemData = SystemData::with('options')->paginate();
+        //dd($systemData);
         return [
-            'creators' => Creator::paginate()
+            'systemData' => $systemData
         ];
     }
 
     /**
      * Button commands.
      *
-     * @return Link[]
+     * @return \Orchid\Screen\Action[]
      */
     public function commandBar(): array
     {
         return [
-            Link::make('Create new')
+            Link::make('Create new Data')
                 ->icon('pencil')
-                ->route('platform.creator.edit')
+                ->route('platform.system.edit')
         ];
     }
+
     /**
      * Views.
      *
@@ -56,7 +59,7 @@ class CreatorListScreen extends Screen
     public function layout(): array
     {
         return [
-            CreatorListLayout::class
+            SystemDataListLayout::class
         ];
     }
 }

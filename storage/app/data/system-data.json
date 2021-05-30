@@ -1,0 +1,28 @@
+[
+    {
+        "name": "Tools",
+        "options": [
+            {
+                "name": "Adobe Illustrator"
+            },
+            {
+                "name": "Adobe Photoshop"
+            },
+            {
+                "name": "Adobe After Effects"
+            },
+            {
+                "name": "Adobe Media Encoder"
+            },
+            {
+                "name": "Adobe Premiere Pro"
+            },
+            {
+                "name": "Adobe XD"
+            },
+            {
+                "name": "Adobe Lightroom"
+            }
+        ]
+    }
+]
