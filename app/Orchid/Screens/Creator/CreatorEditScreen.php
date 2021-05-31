@@ -50,6 +50,14 @@ class CreatorEditScreen extends Screen
      *
      * @return array
      */
+
+
+    public function __construct()
+    {
+        $this->social = FilterOption::where('filter_code', 'social')->get()->keyBy('admin_name')->transform(function ($item, $key) {
+            return $item->admin_name;
+        })->toArray();
+    }
     public function query(Creator $creator): array
     {
         $this->exists = $creator->exists;
@@ -60,13 +68,11 @@ class CreatorEditScreen extends Screen
 
         $creator->load('attachment');
         // dd($creator);
-        $social = FilterOption::where('filter_code', 'social')->get()->transform(function ($item, $key) {
-            return $item->admin_name;
-        })->toArray();
+
         //dd($social);
         return [
-            'creator' => $creator,
-            'social' => $social
+            'creator' => $creator
+
         ];
     }
 
@@ -141,19 +147,18 @@ class CreatorEditScreen extends Screen
                 // Select::make('creator.socials')->fromQuery(FilterOption::where('filter_code', '=', 'social'), 'admin_name'),
                 // ->fromModel(FilterOption::class, 'admin_name'),
                 //
-                Select::make('creator.socials')->options('social'),
+                // Select::make('creator.socials')->options($this->social),
 
 
-                // Matrix::make('creator.socials')->title('Socials')
-                //     ->columns([
-                //         'type', 'url'
-                //     ])->fields([
-                //         'type'  =>
-                //         Relation::make()->fromModel(FilterOption::class, 'admin_name', 'admin_name')
-                //             ->applyScope('parent', 'social'),
-                //         'url' =>
-                //         Input::make()
-                //     ])->maxRows(5),
+                Matrix::make('creator.socials')->title('Socials')
+                    ->columns([
+                        'type', 'url'
+                    ])->fields([
+                        'type'  =>
+                        Select::make('creator.socials')->options($this->social),
+                        'url' =>
+                        Input::make()
+                    ])->maxRows(5),
 
                 Relation::make('creator.languages.')->fromModel(FilterOption::class, 'admin_name', 'admin_name')
                     ->applyScope('parent', 'languages')->multiple()->title('Languages'),
