@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Filter\FilterOption;
 use App\Models\Traits\CanBeScoped;
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Orchid\Screen\AsSource;
@@ -32,7 +33,7 @@ class Creator extends Model
     ];
 
     protected $casts = [
-        'socials' => AsCollection::class,
+        'socials' => AsArrayObject::class,
         'languages' => AsCollection::class,
         'categories' => 'array'
     ];
