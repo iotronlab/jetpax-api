@@ -29,14 +29,14 @@ class CreatorEditScreen extends Screen
      *
      * @var string
      */
-    public $name = 'Creating a new post';
+    public $name = 'Add a new Creator';
 
     /**
      * Display header description.
      *
      * @var string
      */
-    public $description = 'Blog posts';
+    public $description = 'creator data form';
 
     /**
      * @var bool
@@ -63,7 +63,7 @@ class CreatorEditScreen extends Screen
         $this->exists = $creator->exists;
 
         if ($this->exists) {
-            $this->name = 'Edit creator';
+            $this->name = 'Edit Creator';
         }
 
         $creator->load('attachment');

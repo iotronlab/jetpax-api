@@ -13,10 +13,10 @@ class CreatorController extends Controller
 {
     public function index()
     {
-        // return CreatorResource::collection(
-        //     Creator::withScopes($this->scopes())->paginate(10)
-        // );
-        return Creator::with('lang')->get();
+        return CreatorResource::collection(
+            Creator::withScopes($this->scopes())->paginate(10)
+        );
+        //return Creator::with('lang')->get();
     }
 
     protected function scopes()

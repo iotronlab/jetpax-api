@@ -36,8 +36,4 @@ class Creator extends Model
         'languages' => AsCollection::class,
         'categories' => 'array'
     ];
-    public function lang()
-    {
-        return $this->hasMany(FilterOption::class, 'id', 'languages');
-    }
 }
