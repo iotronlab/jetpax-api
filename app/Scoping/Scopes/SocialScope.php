@@ -9,6 +9,7 @@ class SocialScope implements Scope
 {
     public function apply(Builder $builder, $value)
     {
-        return $builder->whereJsonContains('socials->type',explode(',', $value));
+        // return $builder->whereJsonContains('socials->type',explode(',', $value));
+        return $builder->where('socials','like','%'.$value.'%');
     }
 }

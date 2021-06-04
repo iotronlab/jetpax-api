@@ -18,6 +18,7 @@ class CreatorResource extends JsonResource
             'id'                => $this->id,
             'name'              => $this->name,
             'email'             => $this->email,
+            'contact'           => $this->contact,
             'gender'            => $this->gender,
             'max_follower'      => $this->max_followers,
             'language'          => $this->languages,

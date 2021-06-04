@@ -13,6 +13,8 @@ class FollowersScope implements Scope
 
         //     $builder->whereIn('url', explode(',', $value));
         // });
-        return $builder->where('max_followers','>',$value);
+        $value = (int) filter_var($value, FILTER_SANITIZE_NUMBER_INT);
+
+        return $builder->where('max_followers','>',$value*100);
     }
 }
