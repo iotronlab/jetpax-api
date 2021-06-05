@@ -37,4 +37,9 @@ class Creator extends Model
         'languages' => AsCollection::class,
         'categories' => 'array'
     ];
+
+    public function services()
+    {
+        return $this->belongsToMany(Services::class)->withPivot(['rate']);
+    }
 }

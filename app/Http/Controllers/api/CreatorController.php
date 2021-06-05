@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CreatorResource;
 use App\Http\Resources\CreatorShowResource;
 use App\Models\Creator;
+use App\Scoping\Scopes\BudgetScope;
 use App\Scoping\Scopes\CategoriesScope;
 use App\Scoping\Scopes\FollowersScope;
 use App\Scoping\Scopes\LanguagesScope;
@@ -21,11 +22,17 @@ class CreatorController extends Controller
      */
     public function index()
     {
+        // $cre = Creator::find(13);
+        // $cre->services()->sync([
+        //     1 => [
+        //         'rate' => '1000'
+        //     ]
+        // ]);
+        //  return $cre;
+
         return CreatorResource::collection(
             Creator::withScopes($this->scopes())->paginate(10)
         );
-        // $value ="Twitter";
-        // return Creator::where('socials','like','%'.$value.'%')->get();
     }
 
     protected function scopes()
@@ -35,6 +42,7 @@ class CreatorController extends Controller
             'languages'     => new LanguagesScope(),
             'categories'    => new CategoriesScope(),
             'social'        => new SocialScope(),
+            'budget'        => new BudgetScope()
         ];
     }
 
