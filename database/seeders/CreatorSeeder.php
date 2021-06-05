@@ -6,6 +6,7 @@ use App\Models\Creator;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+
 class CreatorSeeder extends Seeder
 {
     /**
@@ -16,7 +17,7 @@ class CreatorSeeder extends Seeder
     public function run()
     {
         Creator::factory()
-                ->times(1)
-                ->create();
+            ->times(10)
+            ->create();
     }
 }

@@ -97,5 +97,29 @@
                 "admin_name": "100K+ followers"
             }
         ]
+    },
+    {
+        "code": "budget",
+        "admin_name": "Budget",
+        "options": [
+            {
+                "admin_name": "10000"
+            },
+            {
+                "admin_name": "20000"
+            },
+            {
+                "admin_name": "30000"
+            },
+            {
+                "admin_name": "40000"
+            },
+            {
+                "admin_name": "50000"
+            },
+            {
+                "admin_name": "100000"
+            }
+        ]
     }
 ]
