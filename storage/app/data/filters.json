@@ -2,6 +2,7 @@
     {
         "code": "languages",
         "admin_name": "Language",
+        "multiselect": true,
         "options": [
             {
                 "admin_name": "English"
@@ -23,6 +24,7 @@
     {
         "code": "social",
         "admin_name": "Social",
+        "multiselect": true,
         "options": [
             {
                 "admin_name": "Instagram"
@@ -41,6 +43,7 @@
     {
         "code": "categories",
         "admin_name": "Categories",
+        "multiselect": true,
         "options": [
             {
                 "admin_name": "Health and Fitness"
@@ -77,6 +80,7 @@
     {
         "code": "followers",
         "admin_name": "Followers",
+        "multiselect": true,
         "options": [
             {
                 "admin_name": "10K+ followers"
@@ -101,6 +105,7 @@
     {
         "code": "budget",
         "admin_name": "Budget",
+        "multiselect": true,
         "options": [
             {
                 "admin_name": "10000"

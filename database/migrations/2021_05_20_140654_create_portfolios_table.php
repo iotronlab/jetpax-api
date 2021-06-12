@@ -19,11 +19,12 @@ class CreatePortfoliosTable extends Migration
             $table->text('client_brief');
             $table->text('project_description');
             $table->json('tools')->nullable();
-            $table->json('images')->nullable();
-            $table->json('meta')->nullable();
+
+            $table->string('meta')->nullable();
             $table->json('external_url')->nullable();
 
-
+            $table->integer('order')->nullable();
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

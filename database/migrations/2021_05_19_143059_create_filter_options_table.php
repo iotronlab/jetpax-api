@@ -16,8 +16,9 @@ class CreateFilterOptionsTable extends Migration
         Schema::create('filter_options', function (Blueprint $table) {
             $table->id();
             $table->string('admin_name');
-            $table->string('order')->nullable();
+            $table->integer('order')->nullable();
             $table->string('filter_code');
+            $table->boolean('status')->default(true);
             $table->foreign('filter_code')->references('code')->on('filters')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Portfolio;
+namespace App\Models\Creator;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PostImage extends Model
+class CreatorSocial extends Model
 {
     use HasFactory;
 }

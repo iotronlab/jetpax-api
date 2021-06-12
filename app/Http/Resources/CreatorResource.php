@@ -21,9 +21,9 @@ class CreatorResource extends JsonResource
             'contact'           => $this->contact,
             'gender'            => $this->gender,
             'max_follower'      => $this->max_followers,
-            'language'          => $this->languages,
+            'languages'          => $this->languages,
             'socials'           => $this->socials,
-            'category'          => $this->categories,
+            'categories'          => $this->categories,
             'services'          => $this->services,
         ];
     }

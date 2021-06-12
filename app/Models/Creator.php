@@ -40,6 +40,6 @@ class Creator extends Model
 
     public function services()
     {
-        return $this->belongsToMany(Services::class)->withPivot(['rate']);
+        return $this->belongsToMany(Services::class)->withPivot('rate');
     }
 }

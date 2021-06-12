@@ -5,10 +5,12 @@ namespace App\Orchid\Screens\Creator;
 use App\Models\Creator;
 use App\Models\Filter\Filter;
 use App\Models\Filter\FilterOption;
+use App\Models\Services;
 use App\Models\System\SystemDataOption;
 use App\Models\SystemData;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Radio;
 use Orchid\Screen\Fields\Cropper;
@@ -16,10 +18,13 @@ use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Fields\Upload;
 use Orchid\Support\Facades\Layout;
 use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Actions\DropDown;
+use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\Matrix;
 use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Screen;
+use Orchid\Screen\TD;
 use Orchid\Support\Facades\Alert;
 
 class CreatorEditScreen extends Screen
@@ -57,6 +62,8 @@ class CreatorEditScreen extends Screen
         $this->social = FilterOption::where('filter_code', 'social')->get()->keyBy('admin_name')->transform(function ($item, $key) {
             return $item->admin_name;
         })->toArray();
+
+        // $this->service = null;
     }
     public function query(Creator $creator): array
     {
@@ -66,12 +73,13 @@ class CreatorEditScreen extends Screen
             $this->name = 'Edit Creator';
         }
 
-        $creator->load('attachment');
-        // dd($creator);
+        $creator->load('attachment', 'services');
+        //dd($creator->services);
 
         //dd($social);
         return [
-            'creator' => $creator
+            'creator' => $creator,
+            'services' => $creator->services
 
         ];
     }
@@ -98,6 +106,12 @@ class CreatorEditScreen extends Screen
                 ->icon('trash')
                 ->method('remove')
                 ->canSee($this->exists),
+
+            ModalToggle::make('Add Service')
+                ->modal('serviceModal')
+                ->method('createService')
+                ->icon('plus')
+                ->canSee($this->exists),
         ];
     }
 
@@ -109,6 +123,17 @@ class CreatorEditScreen extends Screen
     public function layout(): array
     {
         return [
+
+            Layout::modal('serviceModal', [
+                Layout::rows([
+                    Relation::make('service.id')->fromModel(Services::class, 'name')
+                        ->title('Services'),
+                    Input::make('service.rate')
+                        ->title('Rate')
+                        ->placeholder('Enter Rate'),
+                ])
+            ])->title('Add a Service'),
+
             Layout::rows([
                 Input::make('creator.name')
                     ->title('Name')
@@ -164,6 +189,9 @@ class CreatorEditScreen extends Screen
                     ->applyScope('parent', 'languages')->multiple()->title('Languages'),
                 Relation::make('creator.categories.')->fromModel(FilterOption::class, 'admin_name', 'admin_name')
                     ->applyScope('parent', 'categories')->multiple()->title('Categories'),
+                // Relation::make('creator.services.')->fromModel(Services::class, 'name')
+                //     ->title('Services'),
+
 
 
                 // Matrix::make('creator.categories')->title('Categories')
@@ -174,7 +202,37 @@ class CreatorEditScreen extends Screen
                 //             ->fromQuery(FilterOption::where('filter_code', '=', 'categories'), 'admin_name')
 
                 //     ])
+            ]),
+            Layout::table('services', [
+                TD::make('name'),
+                TD::make('pivot.rate', 'Rate')->sort(),
+                TD::make('Action')
+                    ->render(function (Services $service) {
+                        return
+                            Button::make(__($service->id))
+                            ->method('delService')
+                            ->icon('trash')
+                            ->confirm(__('Are you sure you want to delete the user?'))
+                            ->parameters([
+                                'service' => $service->id,
+                            ]);
+                        // DropDown::make()
+                        // ->icon('options-vertical')
+                        // ->list([
+                        //     Button::make(__('Edit'))
+                        //         ->route('platform.users.edit', $service->id)
+                        //         ->icon('pencil'),
+                        //     Button::make(__('Delete'))
+                        //         ->method('remove')
+                        //         ->icon('trash')
+                        //         ->confirm(__('Are you sure you want to delete the user?'))
+                        //         ->parameters([
+                        //             'id' => $service->id,
+                        //         ]),
+                        // ])
+                    }),
             ])
+
         ];
     }
 
@@ -187,7 +245,7 @@ class CreatorEditScreen extends Screen
     public function createOrUpdate(Creator $creator, Request $request)
     {
         $data = $request->get('creator');
-        // dd($data);
+
         $creator->fill($data)->save();
 
         $creator->attachment()->syncWithoutDetaching(
@@ -199,6 +257,23 @@ class CreatorEditScreen extends Screen
         return redirect()->route('platform.creator.list');
     }
 
+    public function createService(Creator $creator, Request $request)
+    {
+        $data = $request->get('service');
+
+        $creator->services()->attach(Arr::get($data, 'id'), ['rate' => Arr::get($data, 'rate')]);
+
+        Alert::info('You have successfully added a service.');
+    }
+
+
+    public function delService(Creator $creator, $service)
+    {
+        dd($service);
+        //  $creator->services()->detach($id);
+
+        Alert::info('You have successfully deleted a service.');
+    }
     /**
      * @param Creator $creator
      *

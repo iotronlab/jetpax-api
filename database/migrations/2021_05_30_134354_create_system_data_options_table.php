@@ -17,6 +17,8 @@ class CreateSystemDataOptionsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('system_data_code');
+            $table->boolean('status')->default(true);
+
             $table->foreign('system_data_code')->references('code')->on('system_data')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

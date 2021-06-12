@@ -19,18 +19,18 @@ class FilterSeeder extends Seeder
         $json = Storage::disk('local')->get('data/filters.json');
         $filters = json_decode($json);
 
-        foreach($filters as $filter){
+        foreach ($filters as $filter) {
             $data = Filter::create(array(
                 'code' => $filter->code,
                 'admin_name' => $filter->admin_name,
+                'multiselect' => $filter->multiselect,
             ));
 
-            foreach($filter->options as $filterChildren){
+            foreach ($filter->options as $filterChildren) {
                 $nestedData = $data->options()->create(array(
                     'admin_name' => $filterChildren->admin_name
                 ));
             }
         }
-
     }
 }

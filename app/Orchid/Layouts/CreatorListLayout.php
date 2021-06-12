@@ -27,9 +27,12 @@ class CreatorListLayout extends Table
                     return Link::make($creator->name)
                         ->route('platform.creator.edit', $creator);
                 }),
+            TD::make('email', 'Email'),
+            TD::make('contact', 'Contact'),
+            TD::make('gender', 'Gender'),
 
-            TD::make('created_at', 'Created'),
-            TD::make('updated_at', 'Last edit'),
+            // TD::make('created_at', 'Created'),
+            // TD::make('updated_at', 'Last edit'),
         ];
     }
 }

@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             // CategorySeeder::class,
             FilterSeeder::class,
             PortfolioSeeder::class,
-            SystemDataSeeder::class
+            SystemDataSeeder::class,
+            ServiceSeeder::class
         ]);
     }
 }

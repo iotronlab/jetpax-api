@@ -16,6 +16,8 @@ class CreateSystemDataTable extends Migration
         Schema::create('system_data', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
+            $table->boolean('status')->default(true);
+
             $table->timestamps();
         });
     }

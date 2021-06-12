@@ -17,7 +17,11 @@ class CreateFiltersTable extends Migration
             $table->id();
             $table->string('code')->unique()->index();
             $table->string('admin_name');
-            $table->string('order')->nullable();
+            $table->boolean('multiselect');
+            $table->boolean('status')->default(true);
+
+
+            $table->integer('order')->nullable();
             $table->timestamps();
         });
     }
