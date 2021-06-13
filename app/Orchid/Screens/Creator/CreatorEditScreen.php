@@ -215,6 +215,7 @@ class CreatorEditScreen extends Screen
                             ->icon('trash')
                             ->confirm(__('Are you sure you want to delete the user?'))
                             ->parameters([
+                                'creator_id' => $service->pivot->creator_id,
                                 'service_id' => $service->id,
                             ]);
                         // DropDown::make()
