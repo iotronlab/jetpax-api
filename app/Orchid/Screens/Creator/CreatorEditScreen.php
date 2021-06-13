@@ -269,11 +269,11 @@ class CreatorEditScreen extends Screen
     }
 
 
-    public function delService(Creator $creator, Request $request)
+    public function delService(Creator $creator, $data)
     {
-        $id = (int)$request->get('service_id');
-        //dd($id);
-        $creator->services()->detach($id);
+        //$id = (int)$request->get('service_id');
+        // dd($data);
+        $creator->services()->detach($data);
 
         //  Alert::info('You have successfully deleted a service.');
     }
