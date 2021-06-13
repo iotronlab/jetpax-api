@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Creator;
 
-use App\Models\Filter\FilterOption;
-use App\Models\Traits\CanBeScoped;
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
+use App\Models\Traits\CanBeScoped;
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Orchid\Screen\AsSource;
 use Orchid\Attachment\Attachable;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
-use Orchid\Attachment\Models\Attachment;
+
 
 
 class Creator extends Model
@@ -40,6 +41,6 @@ class Creator extends Model
 
     public function services()
     {
-        return $this->belongsToMany(Services::class)->withPivot('rate');
+        return $this->belongsToMany(Service::class, 'creator_service', 'creator_id', 'service_id')->withPivot('rate');
     }
 }

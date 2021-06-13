@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCreatorServices extends Migration
+class CreateCreatorService extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateCreatorServices extends Migration
      */
     public function up()
     {
-        Schema::create('creator_services', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('services_id');
+        Schema::create('creator_service', function (Blueprint $table) {
+
+            $table->unsignedBigInteger('service_id');
             $table->unsignedBigInteger('creator_id');
             $table->integer('rate');
             $table->timestamps();

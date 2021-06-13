@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Services;
+use App\Models\Creator\Service;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,7 +20,7 @@ class ServiceSeeder extends Seeder
         $services = json_decode($json);
 
         foreach ($services as $service) {
-            $data = Services::create(array(
+            $data = Service::create(array(
 
                 'name' => $service->name,
             ));

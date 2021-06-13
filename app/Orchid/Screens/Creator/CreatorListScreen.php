@@ -2,9 +2,10 @@
 
 namespace App\Orchid\Screens\Creator;
 
+use App\Models\Creator\Creator;
 use Orchid\Screen\Screen;
 use App\Orchid\Layouts\CreatorListLayout;
-use App\Models\Creator;
+
 use Orchid\Screen\Actions\Link;
 
 class CreatorListScreen extends Screen

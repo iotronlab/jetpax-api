@@ -5,7 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CreatorResource;
 use App\Http\Resources\CreatorShowResource;
-use App\Models\Creator;
+use App\Models\Creator\Creator;
 use App\Scoping\Scopes\BudgetScope;
 use App\Scoping\Scopes\CategoriesScope;
 use App\Scoping\Scopes\FollowersScope;

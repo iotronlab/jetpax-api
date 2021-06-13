@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Creator;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Orchid\Screen\AsSource;
 
-class Services extends Model
+class Service extends Model
 {
     use HasFactory, AsSource;
 
@@ -16,6 +16,6 @@ class Services extends Model
 
     public function creators()
     {
-        return $this->belongsToMany(Creator::class);
+        return $this->belongsToMany(Creator::class, 'creator_service', 'service_id', 'creator_id');
     }
 }

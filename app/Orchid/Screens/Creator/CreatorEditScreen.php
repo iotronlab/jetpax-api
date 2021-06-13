@@ -2,10 +2,11 @@
 
 namespace App\Orchid\Screens\Creator;
 
-use App\Models\Creator;
+use App\Models\Creator\Creator;
+use App\Models\Creator\Service;
 use App\Models\Filter\Filter;
 use App\Models\Filter\FilterOption;
-use App\Models\Services;
+
 use App\Models\System\SystemDataOption;
 use App\Models\SystemData;
 use App\Models\User;
@@ -79,7 +80,7 @@ class CreatorEditScreen extends Screen
         //dd($social);
         return [
             'creator' => $creator,
-            'services' => $creator->services
+            //  'services' => $creator->services
 
         ];
     }
@@ -126,7 +127,7 @@ class CreatorEditScreen extends Screen
 
             Layout::modal('serviceModal', [
                 Layout::rows([
-                    Relation::make('service.id')->fromModel(Services::class, 'name')
+                    Relation::make('service.id')->fromModel(Service::class, 'name')
                         ->title('Services'),
                     Input::make('service.rate')
                         ->title('Rate')
@@ -203,18 +204,18 @@ class CreatorEditScreen extends Screen
 
                 //     ])
             ]),
-            Layout::table('services', [
+            Layout::table('creator.services', [
                 TD::make('name'),
                 TD::make('pivot.rate', 'Rate')->sort(),
                 TD::make('Action')
-                    ->render(function (Services $service) {
+                    ->render(function (Service $service) {
                         return
                             Button::make(__($service->id))
                             ->method('delService')
                             ->icon('trash')
                             ->confirm(__('Are you sure you want to delete the user?'))
                             ->parameters([
-                                'service' => $service->id,
+                                'service_id' => $service->id,
                             ]);
                         // DropDown::make()
                         // ->icon('options-vertical')
@@ -261,18 +262,19 @@ class CreatorEditScreen extends Screen
     {
         $data = $request->get('service');
 
-        $creator->services()->attach(Arr::get($data, 'id'), ['rate' => Arr::get($data, 'rate')]);
+        $creator->services()->attach((int)Arr::get($data, 'id'), ['rate' => Arr::get($data, 'rate')]);
 
         Alert::info('You have successfully added a service.');
     }
 
 
-    public function delService(Creator $creator, $service)
+    public function delService(Creator $creator, Request $request)
     {
-        dd($service);
-        //  $creator->services()->detach($id);
+        $id = (int)$request->get('service_id');
+        //dd($id);
+        $creator->services()->detach($id);
 
-        Alert::info('You have successfully deleted a service.');
+        //  Alert::info('You have successfully deleted a service.');
     }
     /**
      * @param Creator $creator
