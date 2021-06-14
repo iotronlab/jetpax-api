@@ -28,6 +28,8 @@ use App\Orchid\Screens\Post\PostListScreen;
 use App\Orchid\Screens\System\SystemDataEditScreen;
 use App\Orchid\Screens\System\SystemDataListScreen;
 
+use App\Orchid\Screens\EmailSenderScreen;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -150,3 +152,11 @@ Route::screen('post/{post?}', PostEditScreen::class)
 
 Route::screen('posts', PostListScreen::class)
     ->name('platform.post.list');
+
+Route::screen('email', EmailSenderScreen::class)
+    ->name('platform.email')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail
+            ->parent('platform.index')
+            ->push('Email sender');
+    });

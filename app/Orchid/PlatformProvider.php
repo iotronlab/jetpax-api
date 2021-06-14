@@ -33,6 +33,10 @@ class PlatformProvider extends OrchidServiceProvider
                 ->badge(function () {
                     return 6;
                 }),
+            Menu::make('Email sender')
+                ->icon('envelope-letter')
+                ->route('platform.email')
+                ->title('Tools'),
 
             Menu::make('Portfolio')
                 ->icon('code')
