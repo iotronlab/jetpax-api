@@ -19,6 +19,8 @@ class CreateCreatorService extends Migration
             $table->unsignedBigInteger('creator_id');
             $table->integer('rate');
             $table->timestamps();
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('creator_id')->references('id')->on('creators')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

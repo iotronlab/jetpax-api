@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens\Creator;
 
 use App\Models\Creator\Creator;
+use App\Models\Creator\CreatorSocial;
 use App\Models\Creator\Service;
 use App\Models\Filter\Filter;
 use App\Models\Filter\FilterOption;
@@ -48,6 +49,7 @@ class CreatorEditScreen extends Screen
      * @var bool
      */
     public $exists = false;
+    public $socialFilters = null;
 
     /**
      * Query data.
@@ -60,7 +62,7 @@ class CreatorEditScreen extends Screen
 
     public function __construct()
     {
-        $this->social = FilterOption::where('filter_code', 'social')->get()->keyBy('admin_name')->transform(function ($item, $key) {
+        $this->socialFilters = FilterOption::where('filter_code', 'social')->get()->keyBy('admin_name')->transform(function ($item, $key) {
             return $item->admin_name;
         })->toArray();
 
@@ -72,16 +74,15 @@ class CreatorEditScreen extends Screen
 
         if ($this->exists) {
             $this->name = 'Edit Creator';
+            $creator->load('attachment', 'services', 'socials');
         }
 
-        $creator->load('attachment', 'services');
-        //dd($creator->services);
+
+        //   dd($creator);
 
         //dd($social);
         return [
             'creator' => $creator,
-            //  'services' => $creator->services
-
         ];
     }
 
@@ -113,6 +114,12 @@ class CreatorEditScreen extends Screen
                 ->method('createService')
                 ->icon('plus')
                 ->canSee($this->exists),
+
+            ModalToggle::make('Add Social')
+                ->modal('socialModal')
+                ->method('createSocial')
+                ->icon('plus')
+                ->canSee($this->exists),
         ];
     }
 
@@ -135,40 +142,59 @@ class CreatorEditScreen extends Screen
                 ])
             ])->title('Add a Service'),
 
+            Layout::modal('socialModal', [
+                Layout::rows([
+                    Select::make('social.type')->options($this->socialFilters)
+                        ->title('Socials'),
+                    Input::make('social.name')
+                        ->title('Name')
+                        ->placeholder('Enter Name'),
+                    Input::make('social.url')
+                        ->title('Url')
+                        ->placeholder('Enter profile url'),
+                    Input::make('social.followers')
+                        ->title('Followers')
+                        ->placeholder('Enter number of followers')
+
+                ])
+            ])->title('Add a Social'),
+
+
+
             Layout::rows([
                 Input::make('creator.name')
                     ->title('Name')
                     ->placeholder('Enter your name')
-                    ->help('Specify a name'),
+                    ->required(),
 
                 Input::make('creator.email')
                     ->title('Email address')
                     ->placeholder('Email address')
-                    ->help("We'll never share your email with anyone else.")
-                    ->popover('Tooltip - hint that user opens himself.'),
+                    ->required(),
 
                 Select::make('creator.gender')
                     ->title('Select Gender')->options([
                         'M'   => 'Male',
                         'F' => 'Female',
                         'Universal' => 'Universal',
-                    ])->help('Select universal if not sure about gender.'),
+                    ])->help('Select universal if not sure about gender.')->required(),
 
                 Input::make('creator.contact')
                     ->mask('9999999999')
                     ->title('Phone')
                     ->placeholder('Enter phone number')
-                    ->help('Number Phone'),
+                    ->required(),
 
                 Cropper::make('creator.display_image')
                     ->title('Display Image')
                     ->width(1000)
-                    ->height(500),
-
+                    ->height(500)
+                    ->required(),
                 Cropper::make('creator.cover_image')
                     ->title('Cover Image')
                     ->width(1000)
-                    ->height(500),
+                    ->height(500)
+                    ->required(),
 
                 // Select::make('creator.socials')->fromQuery(FilterOption::where('filter_code', '=', 'social'), 'admin_name'),
                 // ->fromModel(FilterOption::class, 'admin_name'),
@@ -176,34 +202,24 @@ class CreatorEditScreen extends Screen
                 // Select::make('creator.socials')->options($this->social),
 
 
-                Matrix::make('creator.socials')->title('Socials')
-                    ->columns([
-                        'type', 'url'
-                    ])->fields([
-                        'type'  =>
-                        Select::make('creator.socials')->options($this->social),
-                        'url' =>
-                        Input::make()
-                    ])->maxRows(5),
+                // Matrix::make('creator.socials')->title('Socials')
+                //     ->columns([
+                //         'type', 'url'
+                //     ])->fields([
+                //         'type'  =>
+                //         Select::make('creator.socials')->options($this->social),
+                //         'url' =>
+                //         Input::make()
+                //     ])->maxRows(5),
 
                 Relation::make('creator.languages.')->fromModel(FilterOption::class, 'admin_name', 'admin_name')
                     ->applyScope('parent', 'languages')->multiple()->title('Languages'),
                 Relation::make('creator.categories.')->fromModel(FilterOption::class, 'admin_name', 'admin_name')
                     ->applyScope('parent', 'categories')->multiple()->title('Categories'),
-                // Relation::make('creator.services.')->fromModel(Services::class, 'name')
-                //     ->title('Services'),
-
-
-
-                // Matrix::make('creator.categories')->title('Categories')
-                //     ->columns([
-                //         'category',
-                //     ])->fields([
-                //         'category'  => Select::make()
-                //             ->fromQuery(FilterOption::where('filter_code', '=', 'categories'), 'admin_name')
-
-                //     ])
             ]),
+
+
+
             Layout::table('creator.services', [
                 TD::make('name'),
                 TD::make('pivot.rate', 'Rate')->sort(),
@@ -233,7 +249,13 @@ class CreatorEditScreen extends Screen
                         //         ]),
                         // ])
                     }),
-            ])
+            ])->title('Services')->canSee($this->exists),
+
+            Layout::table('creator.socials', [
+                TD::make('name'),
+                TD::make('type'),
+
+            ])->title('Socials')->canSee($this->exists),
 
         ];
     }

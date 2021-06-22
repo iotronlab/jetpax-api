@@ -30,7 +30,11 @@ class Creator extends Model
         'languages',
         'categories',
         'max_followers',
-        'details'
+        'short_bio',
+        'long_bio',
+        'refer_code',
+        'referral',
+        'status'
     ];
 
     protected $casts = [
@@ -42,5 +46,10 @@ class Creator extends Model
     public function services()
     {
         return $this->belongsToMany(Service::class, 'creator_service', 'creator_id', 'service_id')->withPivot('rate');
+    }
+
+    public function socials()
+    {
+        return $this->hasMany(CreatorSocial::class);
     }
 }

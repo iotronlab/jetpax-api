@@ -19,10 +19,11 @@ class CreateCreatorSocialsTable extends Migration
             $table->string('type');
             $table->string('url');
             $table->unsignedBigInteger('followers');
+            $table->unsignedBigInteger('creator_id');
 
 
             $table->boolean('status')->default(true);
-
+            $table->foreign('creator_id')->references('id')->on('creators')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
