@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 use App\Orchid\Screens\Creator\CreatorEditScreen;
 use App\Orchid\Screens\Creator\CreatorListScreen;
+use App\Orchid\Screens\Creator\SocialEditScreen;
 use App\Orchid\Screens\Filter\FilterEditScreen;
 use App\Orchid\Screens\Filter\FilterListScreen;
 use App\Orchid\Screens\Portfolio\PortfolioEditScreen;
@@ -152,6 +153,9 @@ Route::screen('post/{post?}', PostEditScreen::class)
 
 Route::screen('posts', PostListScreen::class)
     ->name('platform.post.list');
+
+Route::screen('social/{social?}', SocialEditScreen::class)
+    ->name('platform.social.edit');
 
 Route::screen('email', EmailSenderScreen::class)
     ->name('platform.email')

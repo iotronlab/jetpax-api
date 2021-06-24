@@ -2,22 +2,21 @@
 
 namespace App\Models\Creator;
 
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Traits\CanBeScoped;
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Orchid\Screen\AsSource;
 use Orchid\Attachment\Attachable;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 
 
-
 class Creator extends Model
 {
-    use HasFactory, CanBeScoped;
-    use AsSource, Attachable;
+    use HasFactory,
+        CanBeScoped,
+        AsSource,
+        Attachable;
 
     protected $fillable = [
         'name',
@@ -38,10 +37,15 @@ class Creator extends Model
     ];
 
     protected $casts = [
-        'socials' => AsArrayObject::class,
+
         'languages' => AsCollection::class,
-        'categories' => 'array'
+        'categories' => AsCollection::class
     ];
+
+    // public function getRouteKeyName()
+    // {
+    //     return 'name';
+    // }
 
     public function services()
     {

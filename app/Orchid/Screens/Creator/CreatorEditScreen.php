@@ -21,6 +21,7 @@ use Orchid\Screen\Fields\Upload;
 use Orchid\Support\Facades\Layout;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
+use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\Matrix;
 use Orchid\Screen\Fields\Relation;
@@ -96,12 +97,12 @@ class CreatorEditScreen extends Screen
         return [
             Button::make('Create Creator')
                 ->icon('pencil')
-                ->method('createOrUpdate')
+                ->method('createOrEdit')
                 ->canSee(!$this->exists),
 
             Button::make('Update')
                 ->icon('note')
-                ->method('createOrUpdate')
+                ->method('createOrEdit')
                 ->canSee($this->exists),
 
             Button::make('Remove')
@@ -188,13 +189,11 @@ class CreatorEditScreen extends Screen
                 Cropper::make('creator.display_image')
                     ->title('Display Image')
                     ->width(1000)
-                    ->height(500)
-                    ->required(),
+                    ->height(500),
                 Cropper::make('creator.cover_image')
                     ->title('Cover Image')
                     ->width(1000)
-                    ->height(500)
-                    ->required(),
+                    ->height(500),
 
                 // Select::make('creator.socials')->fromQuery(FilterOption::where('filter_code', '=', 'social'), 'admin_name'),
                 // ->fromModel(FilterOption::class, 'admin_name'),
@@ -226,7 +225,7 @@ class CreatorEditScreen extends Screen
                 TD::make('Action')
                     ->render(function (Service $service) {
                         return
-                            Button::make(__($service->id))
+                            Button::make(__('Delete'))
                             ->method('delService')
                             ->icon('trash')
                             ->confirm(__('Are you sure you want to delete the user?'))
@@ -254,6 +253,27 @@ class CreatorEditScreen extends Screen
             Layout::table('creator.socials', [
                 TD::make('name'),
                 TD::make('type'),
+                TD::make('followers'),
+                // //  TD::make('url'),
+                TD::make('Action')
+                    ->render(function (CreatorSocial $creatorSocial) {
+                        return
+
+                            DropDown::make('options')
+                            ->icon('options-vertical')
+                            ->list([
+                                Link::make(__('Edit'))
+                                    ->route('platform.social.edit', $creatorSocial->id)
+                                    ->icon('pencil'),
+                                Button::make(__('Delete'))
+                                    ->method('delSocial')
+                                    ->icon('trash')
+                                    ->confirm(__('Are you sure you want to delete the user?'))
+                                    ->parameters([
+                                        'social_id' => $creatorSocial->id,
+                                    ])
+                            ]);
+                    }),
 
             ])->title('Socials')->canSee($this->exists),
 
@@ -266,7 +286,7 @@ class CreatorEditScreen extends Screen
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function createOrUpdate(Creator $creator, Request $request)
+    public function createOrEdit(Creator $creator, Request $request)
     {
         $data = $request->get('creator');
 
@@ -276,7 +296,7 @@ class CreatorEditScreen extends Screen
             $request->input('creator.attachment', [])
         );
 
-        Alert::info('You have successfully created an creator.');
+        Alert::info('You have successfully saved creator data.');
 
         return redirect()->route('platform.creator.list');
     }
@@ -285,19 +305,35 @@ class CreatorEditScreen extends Screen
     {
         $data = $request->get('service');
 
-        $creator->services()->attach((int)Arr::get($data, 'id'), ['rate' => Arr::get($data, 'rate')]);
+        $creator->services()->attach(Arr::get($data, 'id'), ['rate' => Arr::get($data, 'rate')]);
 
         Alert::info('You have successfully added a service.');
     }
 
 
-    public function delService(Creator $creator, $data)
+    public function delService(Creator $creator, Request $request)
     {
-        //$id = (int)$request->get('service_id');
-        // dd($data);
-        $creator->services()->detach($data);
+        $id = $request->get('service_id');
 
-        //  Alert::info('You have successfully deleted a service.');
+        $creator->services()->detach($id);
+
+        Alert::info('You have successfully deleted a service.');
+    }
+
+    public function createSocial(Creator $creator, Request $request)
+    {
+        $data = $request->get('social');
+
+        $creator->socials()->create($data);
+
+        Alert::info('You have successfully added a social.');
+    }
+
+    public function delSocial(CreatorSocial $creatorSocial)
+    {
+        $creatorSocial->delete();
+
+        Alert::info('You have successfully deleted a social.');
     }
     /**
      * @param Creator $creator
@@ -307,6 +343,8 @@ class CreatorEditScreen extends Screen
      */
     public function remove(Creator $creator)
     {
+        $creator->services()->detach();
+        CreatorSocial::where('creator_id', $creator->id)->delete();
         $creator->delete();
         Alert::info('You have successfully deleted the post.');
 
