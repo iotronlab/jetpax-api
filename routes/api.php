@@ -4,8 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\ContactFormController;
 use App\Http\Controllers\api\CreatorController;
+use App\Http\Controllers\api\PortfolioController;
 use App\Http\Controllers\FilterController;
-use App\Http\Controllers\PortfolioController;
+
 use App\Models\Creator;
 
 /*
@@ -27,8 +28,8 @@ Route::post('businessform', [ContactFormController::class, "uploadBusinessForm"]
 Route::post('creatorform', [ContactFormController::class, "uploadCreatorForm"]);
 
 
-Route::get('filter',[FilterController::class,"index"]);
+Route::get('filter', [FilterController::class, "index"]);
 
-Route::get('portfolio', [PortfolioController::class, "index"]);
+Route::apiResource('portfolio', PortfolioController::class);
 
 Route::apiResource('creator', CreatorController::class);

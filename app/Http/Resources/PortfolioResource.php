@@ -18,10 +18,10 @@ class PortfolioResource extends JsonResource
             'name'                      => $this->name,
             'client_brief'              => $this->client_brief,
             'project_description'       => $this->project_description,
-            'typography'                => $this->typography,
-            'palette'                   => $this->palette,
+
             'tools'                     => $this->tools,
-            'images'                    => $this->load('attachment')
+            'images'                    => $this->whenLoaded('attachment'),
+            'posts'                    => $this->whenLoaded('posts')
         ];
     }
 }
