@@ -16,7 +16,7 @@ class PortfolioShowResource extends PortfolioResource
     {
         // return parent::toArray($request);
         return array_merge(parent::toArray($request), [
-            "detail" => "spefic",
+            'posts'  => $this->whenLoaded('posts')
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PortfolioResource;
+use App\Http\Resources\PortfolioShowResource;
 use App\Models\Portfolio\Portfolio;
 use Illuminate\Http\Request;
 
@@ -17,32 +18,12 @@ class PortfolioController extends Controller
     public function index()
     {
 
-        $portfolio = Portfolio::with('attachment', 'posts')->paginate(10);
+        $portfolio = Portfolio::with('attachment')->paginate(10);
         return PortfolioResource::collection(
             $portfolio
         );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -52,7 +33,8 @@ class PortfolioController extends Controller
      */
     public function show(Portfolio $portfolio)
     {
-        //
+        $portfolio->load('attachment', 'posts', 'posts.attachment');
+        return new PortfolioShowResource($portfolio);
     }
 
     /**
