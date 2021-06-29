@@ -33,3 +33,6 @@ Route::get('filter', [FilterController::class, "index"]);
 Route::apiResource('portfolio', PortfolioController::class);
 
 Route::apiResource('creator', CreatorController::class);
+// ->scoped([
+//     'creator' => 'url',
+// ]);

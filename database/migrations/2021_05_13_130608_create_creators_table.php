@@ -16,6 +16,7 @@ class CreateCreatorsTable extends Migration
         Schema::create('creators', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
+            $table->string('url', 255)->unique();
             $table->string('email', 255)->unique();
             $table->enum('gender', ['M', 'F', 'Universal']);
             $table->string('contact', 15);
