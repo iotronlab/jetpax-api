@@ -15,15 +15,16 @@ class Post extends Model
     protected $table = 'posts';
 
     protected $fillable = [
-
         'name',
         'content',
         'portfolio_id',
-        'images'
+        'meta',
+        'status',
+        'order',
     ];
 
     protected $casts = [
-        'images' => 'array'
+        'external_url' => 'array'
     ];
 
     public function portfolio()

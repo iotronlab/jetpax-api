@@ -20,10 +20,8 @@ class CreatePortfoliosTable extends Migration
             $table->text('client_brief', 600);
             $table->text('project_description', 600);
             $table->json('tools')->nullable();
-
             $table->string('meta')->nullable();
             $table->json('external_url')->nullable();
-
             $table->integer('order')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();

@@ -26,6 +26,7 @@ class PortfolioFactory extends Factory
             'name'                      => Str::random(10),
             'client_brief'              => Str::random(15),
             'project_description'       => Str::random(30),
+            'url'                   => Str::random(10),
         ];
     }
 }

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PortfolioResource;
-use App\Http\Resources\PortfolioShowResource;
+use App\Http\Resources\Portfolio\PortfolioIndexResource;
+use App\Http\Resources\Portfolio\PortfolioShowResource;
 use App\Models\Portfolio\Portfolio;
 use Illuminate\Http\Request;
 
@@ -17,9 +17,8 @@ class PortfolioController extends Controller
      */
     public function index()
     {
-
         $portfolio = Portfolio::with('attachment')->paginate(10);
-        return PortfolioResource::collection(
+        return PortfolioIndexResource::collection(
             $portfolio
         );
     }
@@ -35,39 +34,5 @@ class PortfolioController extends Controller
     {
         $portfolio->load('attachment', 'posts', 'posts.attachment');
         return new PortfolioShowResource($portfolio);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Portfolio\Portfolio  $portfolio
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Portfolio $portfolio)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Portfolio\Portfolio  $portfolio
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Portfolio $portfolio)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Portfolio\Portfolio  $portfolio
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Portfolio $portfolio)
-    {
-        //
     }
 }

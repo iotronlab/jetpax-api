@@ -136,8 +136,9 @@ class PortfolioEditScreen extends Screen
                             ])
 
                     ]),
-                Code::make('portfolio.meta')
-                    ->title('Keywords'),
+                TextArea::make('portfolio.meta')
+                    ->title('Meta Keys')
+                    ->placeholder('Enter your meta keys'),
 
                 Upload::make('portfolio.attachment')
                     ->title('Upload multiple images')
@@ -216,7 +217,7 @@ class PortfolioEditScreen extends Screen
 
         Alert::info('You have successfully created an post.');
 
-        return redirect()->route('platform.portfolio.list');
+        // return redirect()->route('platform.portfolio.list');
     }
 
     /**

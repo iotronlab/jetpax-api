@@ -23,7 +23,6 @@ class CreateCreatorsTable extends Migration
             $table->string('alt_contact', 15)->nullable();
             $table->string('display_image')->nullable();
             $table->string('cover_image')->nullable();
-            //   $table->json('socials')->nullable();
             $table->json('languages')->nullable();
             $table->json('categories')->nullable();
             $table->unsignedBigInteger('max_followers')->nullable();

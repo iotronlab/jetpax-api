@@ -17,20 +17,19 @@ class Portfolio extends Model
 
     protected $fillable = [
         'name',
+        'url',
         'client_brief',
         'project_description',
         'tools',
-        'images',
         'external_url',
-        'meta'
-
+        'meta',
+        'status',
+        'order',
     ];
 
     protected $casts = [
         'tools' => 'array',
-        'meta' => 'array',
         'external_url' => 'array',
-        'images' => 'array'
     ];
 
 

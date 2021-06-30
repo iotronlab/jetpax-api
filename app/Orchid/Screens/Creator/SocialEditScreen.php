@@ -45,7 +45,7 @@ class SocialEditScreen extends Screen
         $this->exists = $creatorSocial->exists;
 
         if ($this->exists) {
-            $this->name = 'Edit Creator';
+            //$this->name = 'Edit Creator';
             // $creator->load('attachment', 'services', 'socials');
         }
 

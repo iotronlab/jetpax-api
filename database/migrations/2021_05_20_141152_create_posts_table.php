@@ -15,18 +15,14 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-
             $table->string('name');
             $table->text('content');
             $table->unsignedBigInteger('portfolio_id')->nullable();
-
             $table->string('meta')->nullable();
             $table->json('external_url')->nullable();
-
-            $table->timestamps();
             $table->integer('order')->nullable();
             $table->boolean('status')->default(true);
-
+            $table->timestamps();
             $table->foreign('portfolio_id')->references('id')->on('portfolios')->onDelete('cascade')->onUpdate('cascade');
         });
     }

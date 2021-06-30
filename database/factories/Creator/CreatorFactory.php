@@ -26,6 +26,7 @@ class CreatorFactory extends Factory
         return [
             'name'                   => Str::random(10),
             'email'                  => Str::random(10) . '@gmail.com',
+            'url'                   => Str::random(10),
             'contact'                => $this->faker->numerify('##########'),
             'max_followers'          => $this->faker->numberBetween(100, 1000),
             'gender'                 => $this->faker->randomElement(['M', 'F', 'Universal']),

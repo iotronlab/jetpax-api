@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Creator;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PortfolioShowResource extends PortfolioResource
+class CreatorShowResource extends CreatorIndexResource
 {
     /**
      * Transform the resource into an array.
@@ -14,9 +14,8 @@ class PortfolioShowResource extends PortfolioResource
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
         return array_merge(parent::toArray($request), [
-            'posts'  => $this->whenLoaded('posts')
+            // "details" => "if any",
         ]);
     }
 }

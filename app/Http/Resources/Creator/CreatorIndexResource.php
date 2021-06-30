@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Creator;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CreatorResource extends JsonResource
+class CreatorIndexResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,6 +17,7 @@ class CreatorResource extends JsonResource
         return [
             'id'                => $this->id,
             'name'              => $this->name,
+            'url'              => $this->url,
             'email'             => $this->email,
             'contact'           => $this->contact,
             'gender'            => $this->gender,
@@ -25,6 +26,8 @@ class CreatorResource extends JsonResource
             'socials'           => $this->socials,
             'categories'          => $this->categories,
             'services'          => $this->services,
+            'display_image' => $this->display_image,
+            'cover_image' => $this->cover_image,
         ];
     }
 }

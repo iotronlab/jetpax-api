@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CreatorResource;
-use App\Http\Resources\CreatorShowResource;
+use App\Http\Resources\Creator\CreatorIndexResource;
+use App\Http\Resources\Creator\CreatorShowResource;
 use App\Models\Creator\Creator;
 use App\Scoping\Scopes\BudgetScope;
 use App\Scoping\Scopes\CategoriesScope;
@@ -30,7 +30,7 @@ class CreatorController extends Controller
         // ]);
         //  return $cre;
 
-        return CreatorResource::collection(
+        return CreatorIndexResource::collection(
             Creator::withScopes($this->scopes())->paginate(10)
         );
     }

@@ -4,7 +4,6 @@ namespace App\Models\Creator;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 use App\Models\Traits\CanBeScoped;
 use Orchid\Screen\AsSource;
 use Orchid\Attachment\Attachable;
@@ -21,11 +20,12 @@ class Creator extends Model
     protected $fillable = [
         'name',
         'email',
+        'url',
         'gender',
         'contact',
+        'alt_contact',
         'display_image',
         'cover_image',
-        'socials',
         'languages',
         'categories',
         'max_followers',
@@ -37,7 +37,6 @@ class Creator extends Model
     ];
 
     protected $casts = [
-
         'languages' => AsCollection::class,
         'categories' => AsCollection::class
     ];
