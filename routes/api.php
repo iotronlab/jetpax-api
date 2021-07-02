@@ -30,7 +30,10 @@ Route::post('creatorform', [ContactFormController::class, "uploadCreatorForm"]);
 
 Route::get('filter', [FilterController::class, "index"]);
 
-Route::apiResource('portfolios', PortfolioController::class)->only(['index', 'show']);
+Route::apiResource('portfolios', PortfolioController::class)->only(['index', 'show'])->scoped([
+    'portfolio' => 'url',
+]);
+
 
 Route::apiResource('creators', CreatorController::class)->scoped([
     'creator' => 'url',
