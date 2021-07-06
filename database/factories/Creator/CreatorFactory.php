@@ -24,12 +24,16 @@ class CreatorFactory extends Factory
     {
 
         return [
-            'name'                   => Str::random(10),
-            'email'                  => Str::random(10) . '@gmail.com',
-            'url'                   => Str::random(10),
+            'name' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'url'                   => $this->faker->unique()->userName(),
             'contact'                => $this->faker->numerify('##########'),
-            'max_followers'          => $this->faker->numberBetween(100, 1000),
+            'max_followers'          => $this->faker->numberBetween(100, 1000000),
             'gender'                 => $this->faker->randomElement(['M', 'F', 'Universal']),
+            'languages' => $this->faker->randomElements(["English", "Hindi", "Bengali", "Tamil", "Telegu"], 3),
+            'categories' => $this->faker->randomElements(["Health and Fitness", "Fashion and Lifestyle", "Beauty and Cosmetics", "Gaming and Technology"], 3),
+            'short_bio' => $this->faker->paragraph(2),
+            'long_bio' => $this->faker->paragraph()
         ];
     }
 }

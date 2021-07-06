@@ -18,6 +18,21 @@
             },
             {
                 "admin_name": "Marathi"
+            },
+            {
+                "admin_name": "Gujrati"
+            },
+            {
+                "admin_name": "Telegu"
+            },
+            {
+                "admin_name": "Kannada"
+            },
+            {
+                "admin_name": "Tamil"
+            },
+            {
+                "admin_name": "Malayalam"
             }
         ]
     },

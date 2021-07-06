@@ -23,10 +23,11 @@ class PortfolioFactory extends Factory
     public function definition()
     {
         return [
-            'name'                      => Str::random(10),
-            'client_brief'              => Str::random(15),
-            'project_description'       => Str::random(30),
-            'url'                   => Str::random(10),
+            'name'  => $this->faker->name(),
+            'client_brief'              =>  $this->faker->paragraph(2),
+            'project_description'       =>     $this->faker->paragraph(4),
+            'url'                   =>   $this->faker->slug(2),
+            'tools' => $this->faker->randomElements(["Adobe Illustrator", "Adobe Photoshop", "Adobe After Effects", "Adobe Premiere Pro"], 2),
         ];
     }
 }
