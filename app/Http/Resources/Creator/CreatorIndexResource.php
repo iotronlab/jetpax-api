@@ -22,6 +22,8 @@ class CreatorIndexResource extends JsonResource
             'contact'           => $this->contact,
             'gender'            => $this->gender,
             'max_follower'      => $this->max_followers,
+            'short_bio'      => $this->short_bio,
+            'long_bio'      => $this->long_bio,
             'languages'          => $this->languages,
             'socials'           => $this->socials,
             'categories'          => $this->categories,

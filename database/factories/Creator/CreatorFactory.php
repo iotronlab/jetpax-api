@@ -32,7 +32,7 @@ class CreatorFactory extends Factory
             'gender'                 => $this->faker->randomElement(['M', 'F', 'Universal']),
             'languages' => $this->faker->randomElements(["English", "Hindi", "Bengali", "Tamil", "Telegu"], 3),
             'categories' => $this->faker->randomElements(["Health and Fitness", "Fashion and Lifestyle", "Beauty and Cosmetics", "Gaming and Technology"], 3),
-            'short_bio' => $this->faker->paragraph(2),
+            'short_bio' => $this->faker->text(100),
             'long_bio' => $this->faker->paragraph()
         ];
     }
