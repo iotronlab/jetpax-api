@@ -25,7 +25,7 @@ class CreatorSocialFactory extends Factory
             'name'    => $this->faker->name(),
             'url'     => $this->faker->unique()->userName(),
             'followers'          => $this->faker->numberBetween(100, 1000000),
-            'type' => $this->faker->randomElement(["Instagram", "Facebook", "Youtube", "Twitter"], 3),
+            'type' => $this->faker->randomElement(["Instagram", "Facebook", "Youtube", "Twitter"]),
         ];
     }
 }

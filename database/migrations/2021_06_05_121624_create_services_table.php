@@ -18,7 +18,6 @@ class CreateServicesTable extends Migration
             $table->string('name');
             $table->text('desc')->nullable();
             $table->boolean('status')->default(true);
-
             $table->timestamps();
         });
     }

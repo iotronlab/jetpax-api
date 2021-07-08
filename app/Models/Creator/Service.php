@@ -12,6 +12,8 @@ class Service extends Model
 
     protected $fillable = [
         'name',
+        'desc',
+        'status'
     ];
 
     public function creators()

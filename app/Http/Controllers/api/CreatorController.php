@@ -22,16 +22,10 @@ class CreatorController extends Controller
      */
     public function index()
     {
-        // $cre = Creator::find(13);
-        // $cre->services()->sync([
-        //     1 => [
-        //         'rate' => '1000'
-        //     ]
-        // ]);
-        //  return $cre;
+        $creators = Creator::with('socials')->withScopes($this->scopes())->paginate(10);
 
         return CreatorIndexResource::collection(
-            Creator::withScopes($this->scopes())->paginate(10)
+            $creators
         );
     }
 
@@ -75,7 +69,7 @@ class CreatorController extends Controller
      */
     public function show(Creator $creator)
     {
-        //
+        $creator->load('socials', 'services');
         return new CreatorShowResource(
             $creator
         );
