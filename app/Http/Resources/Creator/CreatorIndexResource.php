@@ -26,9 +26,9 @@ class CreatorIndexResource extends JsonResource
             'long_bio'      => $this->long_bio,
             'languages'          => $this->languages,
             'categories'          => $this->categories,
-            'socials'           => $this->whenLoaded('socials'),
             'display_image' => $this->display_image,
             'cover_image' => $this->cover_image,
+            'socials'           => $this->whenLoaded('socials'),
         ];
     }
 }

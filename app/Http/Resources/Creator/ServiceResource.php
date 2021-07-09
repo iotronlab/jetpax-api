@@ -4,7 +4,7 @@ namespace App\Http\Resources\Creator;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CreatorShowResource extends CreatorIndexResource
+class ServiceResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,8 +14,10 @@ class CreatorShowResource extends CreatorIndexResource
      */
     public function toArray($request)
     {
-        return array_merge(parent::toArray($request), [
-            'services'   => ServiceResource::collection($this->whenLoaded('services')),
-        ]);
+        return [
+            'name'              => $this->name,
+            'desc'              => $this->desc,
+            'rate'            => $this->pivot->rate,
+        ];
     }
 }
