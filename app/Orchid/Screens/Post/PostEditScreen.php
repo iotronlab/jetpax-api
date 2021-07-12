@@ -7,6 +7,7 @@ use App\Models\Portfolio\Post;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Matrix;
 use Orchid\Screen\Fields\Relation as FieldsRelation;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Fields\TextArea;
@@ -85,9 +86,9 @@ class PostEditScreen extends Screen
     {
         return [
             Layout::rows([
-                FieldsRelation::make('post.portfolio_id')
-                    ->fromModel(Portfolio::class, 'name')
-                    ->title('Select Portfolio Id'),
+                // FieldsRelation::make('post.portfolio_id')
+                //     ->fromModel(Portfolio::class, 'name')
+                //     ->title('Select Portfolio Id'),
 
                 Input::make('post.name')
                     ->title('Name')
@@ -97,8 +98,18 @@ class PostEditScreen extends Screen
                     ->title('Content')
                     ->placeholder('Enter content')->rows(5),
 
-                Upload::make('post.images')
-                    ->title('Upload multiple images')
+                Matrix::make('post.external_url')->title('External Links')
+                    ->columns([
+                        'site',
+                        'url',
+                    ])->fields([
+                        'site'   => Input::make()->type('text'),
+                        'url' => Input::make()->type('url'),
+                    ]),
+
+
+                Upload::make('post.attachment')
+                    ->title('Upload Images')
                     ->horizontal(),
 
             ]),
@@ -127,7 +138,7 @@ class PostEditScreen extends Screen
 
         Alert::info('You have successfully created an post.');
 
-        return redirect()->route('platform.post.list');
+        // return redirect()->route('platform.post.list');
     }
 
     /**

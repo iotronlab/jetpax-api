@@ -19,4 +19,8 @@ class SystemDataOption extends Model
     {
         return $this->belongsTo(SystemData::class, 'system_data_code', 'code');
     }
+    public function scopeParent($query, $code)
+    {
+        return $query->where('system_data_code', $code);
+    }
 }
