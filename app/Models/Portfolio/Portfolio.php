@@ -19,6 +19,7 @@ class Portfolio extends Model
         'name',
         'url',
         'client_brief',
+        'client_location',
         'project_description',
         'tools',
         'external_url',

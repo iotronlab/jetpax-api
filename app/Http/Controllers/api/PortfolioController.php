@@ -17,7 +17,7 @@ class PortfolioController extends Controller
      */
     public function index()
     {
-        $portfolio = Portfolio::with('attachment')->paginate(10);
+        $portfolio = Portfolio::where('status', true)->with('attachment')->paginate(10);
         return PortfolioIndexResource::collection(
             $portfolio
         );

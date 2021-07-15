@@ -3,7 +3,7 @@
 namespace App\Orchid\Screens\Post;
 
 use App\Models\Portfolio\Post;
-use App\Orchid\Layouts\PostListLayout;
+use App\Orchid\Layouts\Post\PostListLayout;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 
@@ -14,25 +14,25 @@ class PostListScreen extends Screen
      *
      * @var string
      */
-    public $name = 'PostListScreen';
+    public $name = 'Post list';
 
     /**
      * Display header description.
      *
      * @var string|null
      */
-    public $description = 'PostListScreen';
+    public $description = 'List of independent posts';
 
     /**
      * Query data.
      *
      * @return array
      */
-    public function query(Post $post): array
+    public function query(): array
     {
 
         return [
-            'posts' => Post::paginate(10),
+            'posts' => Post::where('portfolio_id', null)->paginate(10),
         ];
     }
 

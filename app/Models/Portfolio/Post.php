@@ -19,12 +19,15 @@ class Post extends Model
         'content',
         'portfolio_id',
         'meta',
+        'external_url',
+        'services',
         'status',
         'order',
     ];
 
     protected $casts = [
-        'external_url' => 'array'
+        'external_url' => 'array',
+        'services' => 'array'
     ];
 
     public function portfolio()

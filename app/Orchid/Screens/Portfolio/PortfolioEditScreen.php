@@ -4,25 +4,17 @@ namespace App\Orchid\Screens\Portfolio;
 
 use App\Models\Portfolio\Portfolio;
 use App\Models\Portfolio\Post;
-use App\Models\System\SystemDataOption;
+use App\Orchid\Layouts\Portfolio\PortfolioEditLayout;
+use App\Orchid\Layouts\Post\PostEditLayout;
 use Illuminate\Http\Request;
 
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
-use Orchid\Screen\Fields\CheckBox;
-use Orchid\Screen\Fields\Code;
-use Orchid\Screen\Fields\Cropper;
-use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\Matrix;
-use Orchid\Screen\Fields\Relation;
-use Orchid\Screen\Fields\Select;
-use Orchid\Screen\Fields\Switcher;
-use Orchid\Screen\Fields\TextArea;
-use Orchid\Screen\Fields\Upload;
+
 use Orchid\Screen\Screen;
-use Orchid\Screen\Sight;
+
 use Orchid\Screen\TD;
 use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
@@ -34,7 +26,7 @@ class PortfolioEditScreen extends Screen
      *
      * @var string
      */
-    public $name = 'Create New Portfolio';
+    public $name = 'Create new Case Study';
 
     /**
      * Display header description.
@@ -48,12 +40,13 @@ class PortfolioEditScreen extends Screen
      *
      * @return array
      */
-    public function query(Portfolio $portfolio, Post $posts): array
+    public function query(Portfolio $portfolio): array
     {
         $this->exists = $portfolio->exists;
         $this->portfolio = $portfolio;
         if ($this->exists) {
-            $this->name = 'Edit Your Portfolio';
+            $this->name = 'Edit your portfolio';
+            $this->description = 'Edit your portfolio details';
             $portfolio->load(['attachment', 'posts']);
         }
 
@@ -101,88 +94,17 @@ class PortfolioEditScreen extends Screen
     public function layout(): array
     {
         return [
-            Layout::rows([
-
-                Input::make('portfolio.name')
-                    ->title('Name')
-                    ->placeholder('Enter your name')
-                    ->help('Specify a name')->required(),
-                Input::make('portfolio.url')
-                    ->title('Project Url')
-                    ->placeholder('Unique Url')
-                    ->help('Link to be added after domain')->required(),
-
-                TextArea::make('portfolio.client_brief')
-                    ->title('Client Brief')
-                    ->placeholder('Client brief')->required(),
-                Input::make('portfolio.client_location')
-                    ->title('Client Location')
-                    ->placeholder('Location of client'),
-
-                TextArea::make('portfolio.project_description')
-                    ->title('Description')
-                    ->placeholder('Enter description')->required(),
-
-                Matrix::make('portfolio.external_url')->title('External Links')
-                    ->columns([
-                        'site',
-                        'url',
-                    ])->fields([
-                        'site'   => Input::make()->type('text'),
-                        'url' => Input::make()->type('url'),
-                    ]),
-
-                Relation::make('portfolio.tools.')->fromModel(SystemDataOption::class, 'name', 'name')
-                    ->applyScope('parent', 'tools')->multiple()->title('Tools'),
-
-                TextArea::make('portfolio.meta')
-                    ->title('Meta Keys')
-                    ->placeholder('Enter your meta keys'),
-                Input::make('portfolio.order')
-                    ->title('Order')
-                    ->placeholder('Display order')->type('number'),
-                Switcher::make('portfolio.status')->value('portfolio.status')
-                    ->title('Status')
-                    ->placeholder('Display Status')->sendTrueOrFalse(),
-
-                Upload::make('portfolio.attachment')
-                    ->title('Upload Images')
-                    ->horizontal()->canSee($this->exists),
-            ]),
+            PortfolioEditLayout::class,
 
             Layout::modal('postModal', [
-                Layout::rows([
-
-                    Input::make('post.name')
-                        ->title('Name')
-                        ->placeholder('Enter name'),
-
-                    TextArea::make('post.content')
-                        ->title('Content')
-                        ->placeholder('Enter content')->rows(5),
-
-                    Matrix::make('post.external_url')->title('External Links')
-                        ->columns([
-                            'site',
-                            'url',
-                        ])->fields([
-                            'site'   => Input::make()->type('text'),
-                            'url' => Input::make()->type('url'),
-                        ]),
-
-
-                    Upload::make('post.attachment')
-                        ->title('Upload Images')
-                        ->horizontal(),
-                ])
+                PostEditLayout::class
             ])->title('Add a Post'),
 
             Layout::table('portfolio.posts', [
-                TD::make('name'),
-                TD::make('content'),
-                // TD::make('followers'),
-                // //  TD::make('url'),
-                TD::make('Action')
+                TD::make('name')->width('30%'),
+                TD::make('content')->width('50%'),
+
+                TD::make('Action')->width('20%')
                     ->render(function (Post $post) {
                         return
 
@@ -193,11 +115,11 @@ class PortfolioEditScreen extends Screen
                                     ->route('platform.post.edit', $post->id)
                                     ->icon('pencil'),
                                 Button::make(__('Delete'))
-                                    ->method('delSocial')
+                                    ->method('delPost')
                                     ->icon('trash')
-                                    ->confirm(__('Are you sure you want to delete the user?'))
+                                    ->confirm(__('Are you sure you want to delete this post?'))
                                     ->parameters([
-                                        'social_id' => $post->id,
+                                        'post_id' => $post->id,
                                     ])
                             ]);
                     }),
@@ -227,7 +149,7 @@ class PortfolioEditScreen extends Screen
             );
         }
 
-        Alert::info('You have successfully created an portfolio.');
+        Alert::info('You have successfully saved a portfolio.');
 
         return redirect()->route('platform.portfolio.list');
     }
@@ -252,9 +174,16 @@ class PortfolioEditScreen extends Screen
             );
         }
 
-        Alert::info('You have successfully created an post.');
+        Alert::info('You have successfully saved a post.');
     }
 
+    public function delPost(Post $post)
+    {
+        // dd($post->attachment);
+        $post->delete();
+
+        Alert::info('You have successfully deleted a post.');
+    }
     /**
      * @param Portolio $portfolio
      *
@@ -263,7 +192,10 @@ class PortfolioEditScreen extends Screen
      */
     public function remove(Portfolio $portfolio)
     {
-        $portfolio->attachment()->delete();
+        //  dd($portfolio->posts()->attachment->each);
+        $portfolio->attachment->each->delete();
+
+        $portfolio->posts->each->delete();
         $portfolio->delete();
 
         Alert::info('You have successfully deleted the portfolio.');

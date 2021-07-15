@@ -2,19 +2,14 @@
 
 namespace App\Orchid\Screens\Post;
 
-use App\Models\Portfolio\Portfolio;
 use App\Models\Portfolio\Post;
+use App\Orchid\Layouts\Post\PostEditLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\Matrix;
-use Orchid\Screen\Fields\Relation as FieldsRelation;
-use Orchid\Screen\Fields\Select;
-use Orchid\Screen\Fields\TextArea;
-use Orchid\Screen\Fields\Upload;
+
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Alert;
-use Orchid\Support\Facades\Layout;
+
 
 class PostEditScreen extends Screen
 {
@@ -23,14 +18,14 @@ class PostEditScreen extends Screen
      *
      * @var string
      */
-    public $name = 'Add a Post';
+    public $name = 'Add a post';
 
     /**
      * Display header description.
      *
      * @var string|null
      */
-    public $description = 'Create Post';
+    public $description = 'Create new post';
 
     /**
      * Query data.
@@ -42,7 +37,8 @@ class PostEditScreen extends Screen
         $this->exists = $post->exists;
 
         if ($this->exists) {
-            $this->name = 'Edit Your Post';
+            $this->name = 'Edit your post';
+            $this->description = 'Edit your post details';
             $post->load('attachment');
         }
 
@@ -85,34 +81,7 @@ class PostEditScreen extends Screen
     public function layout(): array
     {
         return [
-            Layout::rows([
-                // FieldsRelation::make('post.portfolio_id')
-                //     ->fromModel(Portfolio::class, 'name')
-                //     ->title('Select Portfolio Id'),
-
-                Input::make('post.name')
-                    ->title('Name')
-                    ->placeholder('Enter name'),
-
-                TextArea::make('post.content')
-                    ->title('Content')
-                    ->placeholder('Enter content')->rows(5),
-
-                Matrix::make('post.external_url')->title('External Links')
-                    ->columns([
-                        'site',
-                        'url',
-                    ])->fields([
-                        'site'   => Input::make()->type('text'),
-                        'url' => Input::make()->type('url'),
-                    ]),
-
-
-                Upload::make('post.attachment')
-                    ->title('Upload Images')
-                    ->horizontal(),
-
-            ]),
+            PostEditLayout::class
         ];
     }
 
@@ -128,7 +97,7 @@ class PostEditScreen extends Screen
     {
         $data = $request->get('post');
         $post->fill($data)->save();
-        $images = $request->input('post.images', []);
+        $images = $request->input('post.attachment', []);
 
         if ($images) {
             $post->attachment()->syncWithoutDetaching(
@@ -136,9 +105,12 @@ class PostEditScreen extends Screen
             );
         }
 
-        Alert::info('You have successfully created an post.');
-
-        // return redirect()->route('platform.post.list');
+        Alert::info('You have successfully saved the post.');
+        if ($post->portfolio_id == null) {
+            return redirect()->route('platform.post.list');
+        } else {
+            return redirect()->route('platform.portfolio.edit', $post->portfolio_id);
+        }
     }
 
     /**
@@ -150,11 +122,15 @@ class PostEditScreen extends Screen
 
     public function remove(Post $post)
     {
-        $post->attachment()->delete();
+        // $post->attachment()->each->delete();
         $post->delete();
 
         Alert::info('You have successfully deleted the post.');
 
-        return redirect()->route('platform.post.list');
+        if ($post->portfolio_id == null) {
+            return redirect()->route('platform.post.list');
+        } else {
+            return redirect()->route('platform.portfolio.edit', $post->portfolio_id);
+        }
     }
 }
