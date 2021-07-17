@@ -48,7 +48,8 @@ class Creator extends Model
 
     public function services()
     {
-        return $this->belongsToMany(Service::class, 'creator_service', 'creator_id', 'service_id')->withPivot('rate');
+        return $this->belongsToMany(Service::class, 'creator_service', 'creator_id', 'service_id')
+            ->withPivot('rate', 'details', 'status');
     }
 
     public function socials()

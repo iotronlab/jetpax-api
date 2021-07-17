@@ -18,6 +18,7 @@ class CreateCreatorService extends Migration
             $table->unsignedBigInteger('service_id');
             $table->unsignedBigInteger('creator_id');
             $table->integer('rate');
+            $table->string('details')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade')->onUpdate('cascade');
