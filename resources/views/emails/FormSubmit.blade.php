@@ -4,10 +4,15 @@
 Hi, {{ $data->name }} Thank you for Form Submit.
 
 @component('mail::table')
-| Laravel       | Table         | Example  |
-| ------------- |:-------------:| --------:|
-| Col 2 is      | Centered      | $10      |
-| Col 3 is      | Right-Aligned | $20      |
+| Laravel       | Table         |
+| ------------- |:-------------:|
+| Name     | {{$data->name}}      |
+| Email     | {{$data->email}} |
+| Profile Name     | {{$data->profile_name}} |
+| Profile Link     | {{$data->profile_link}} |
+| Contact    | {{$data->contact}} |
+| Location     | {{$data->location}} |
+| Details     | {{$data->details}} |
 @endcomponent
 
 @component('mail::button', ['url' => env('APP_URL')])
