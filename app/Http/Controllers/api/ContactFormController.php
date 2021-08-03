@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Events\FormSubmit;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -32,7 +33,9 @@ class ContactFormController extends Controller
             'details' => 'required',
         ]);
 
+
         $businessForm = BusinessForm::updateOrCreate($valid_data);
+        event(new FormSubmit($businessForm));
 
         return response()->json($valid_data);
     }
@@ -55,9 +58,11 @@ class ContactFormController extends Controller
             'details' => 'required',
         ]);
 
+
         //  DB::table('contact_forms')->insert($data);
         $creatorForm = CreatorForm::updateOrCreate($valid_data);
 
+        event(new FormSubmit($creatorForm));
         return response()->json($valid_data);
     }
 
