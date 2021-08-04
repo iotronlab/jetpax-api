@@ -2,17 +2,17 @@
 # Introduction
 
 Hi, {{ $data->name }} Thank you for Form Submit.
+{{$data}}
 
 @component('mail::table')
-| Laravel       | Table         |
+| Your Submited Form    |
 | ------------- |:-------------:|
-| Name     | {{$data->name}}      |
-| Email     | {{$data->email}} |
-| Profile Name     | {{$data->profile_name}} |
-| Profile Link     | {{$data->profile_link}} |
-| Contact    | {{$data->contact}} |
-| Location     | {{$data->location}} |
-| Details     | {{$data->details}} |
+@php
+    foreach($data as $key=>$value){
+| echo $key;    | echo $value; |
+    };
+@endphp
+
 @endcomponent
 
 @component('mail::button', ['url' => env('APP_URL')])
@@ -22,3 +22,6 @@ Visit Our Website
 Thanks,<br>
 {{ config('app.name') }}
 @endcomponent
+
+
+{{-- {{str_replace("_"," ",ucfirst($key))}} --}}
