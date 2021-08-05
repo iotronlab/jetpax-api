@@ -8,6 +8,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\FormSubmit as FormSubmitEmail;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Arr;
 
 class FormSubmitNotification implements ShouldQueue
 {
@@ -30,7 +32,9 @@ class FormSubmitNotification implements ShouldQueue
      */
     public function handle(FormSubmit $event)
     {
-        Mail::to($event->form['email'])->cc('admin@gmail.com')->send(new FormSubmitEmail($event->form));
+
+        $data = Arr::except($event->form,['created_at','updated_at']);
+        Mail::to($event->form['email'])->cc('admin@gmail.com')->send(new FormSubmitEmail($data));
         $this->discord->sendDiscordNotification($event->form);
     }
 }

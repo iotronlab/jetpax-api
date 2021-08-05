@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
+
 class FormSubmit extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
@@ -20,8 +21,7 @@ class FormSubmit extends Mailable implements ShouldQueue
     public $data;
     public function __construct($data)
     {
-    $this->data = $data;
-
+        $this->data = $data;
     }
 
     /**
@@ -31,6 +31,6 @@ class FormSubmit extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->markdown('emails.FormSubmit',['data'=>$this->data]);
+        return $this->markdown('emails.FormSubmit', ['data' => $this->data]);
     }
 }
