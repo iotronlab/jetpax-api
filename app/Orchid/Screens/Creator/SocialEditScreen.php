@@ -87,6 +87,9 @@ class SocialEditScreen extends Screen
                     ->placeholder('Enter profile url'),
                 Input::make('social.followers')
                     ->title('Followers')
+                    ->placeholder('Enter number of followers'),
+                Input::make('social.media_count')
+                    ->title('Media Count')
                     ->placeholder('Enter number of followers')
 
             ]),

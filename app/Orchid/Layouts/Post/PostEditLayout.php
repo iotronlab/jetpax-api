@@ -43,6 +43,14 @@ class PostEditLayout extends Rows
                     'site'   => Input::make()->type('text'),
                     'url' => Input::make()->type('url'),
                 ]),
+            Matrix::make('post.video_url')->title('Video Links')
+                ->columns([
+                    'site',
+                    'url',
+                ])->fields([
+                    'site'   => Input::make()->type('text'),
+                    'url' => Input::make()->type('url'),
+                ]),
 
             Switcher::make('post.status')->value('post.status')
                 ->title('Status')

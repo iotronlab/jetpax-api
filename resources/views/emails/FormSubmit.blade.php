@@ -9,7 +9,7 @@ Hi, {{ $data->name }} Thank you for Form Submit.
 | ------------- |:-------------:|
 @php
     foreach($data as $key=>$value){
-| echo $key;    | echo $value; |
+ echo $key;     echo $value;
     };
 @endphp
 

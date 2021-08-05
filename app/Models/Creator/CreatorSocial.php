@@ -14,7 +14,9 @@ class CreatorSocial extends Model
         'name',
         'type',
         'url',
+        'social_id',
         'followers',
+        'media_count',
         'status',
         'creator_id'
     ];

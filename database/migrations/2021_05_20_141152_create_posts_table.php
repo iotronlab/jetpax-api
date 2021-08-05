@@ -20,6 +20,7 @@ class CreatePostsTable extends Migration
             $table->unsignedBigInteger('portfolio_id')->nullable();
             $table->string('meta')->nullable();
             $table->json('external_url')->nullable();
+            $table->json('video_url')->nullable();
             $table->integer('order')->nullable();
             $table->boolean('status')->default(true);
             $table->json('services')->nullable();

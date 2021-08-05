@@ -139,7 +139,7 @@ class PortfolioEditScreen extends Screen
     {
 
         $data = $request->get('portfolio');
-        //dd($data);
+
         $portfolio->fill($data)->save();
         $images = $request->input('portfolio.attachment', []);
 
@@ -166,7 +166,7 @@ class PortfolioEditScreen extends Screen
 
         $data = $request->get('post');
         $post = $portfolio->posts()->create($data);
-        // dd($post);
+
         $images = $request->input('post.attachment', []);
         if ($images) {
             $post->attachment()->syncWithoutDetaching(
@@ -179,7 +179,6 @@ class PortfolioEditScreen extends Screen
 
     public function delPost(Post $post)
     {
-        // dd($post->attachment);
         $post->delete();
 
         Alert::info('You have successfully deleted a post.');
@@ -192,9 +191,7 @@ class PortfolioEditScreen extends Screen
      */
     public function remove(Portfolio $portfolio)
     {
-        //  dd($portfolio->posts()->attachment->each);
         $portfolio->attachment->each->delete();
-
         $portfolio->posts->each->delete();
         $portfolio->delete();
 

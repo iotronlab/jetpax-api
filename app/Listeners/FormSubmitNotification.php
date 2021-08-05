@@ -3,10 +3,11 @@
 namespace App\Listeners;
 
 use App\Events\FormSubmit;
+use App\Helpers\DiscordNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\FormSubmit as FormSumitEmail;
+use App\Mail\FormSubmit as FormSubmitEmail;
 
 class FormSubmitNotification implements ShouldQueue
 {
@@ -15,9 +16,10 @@ class FormSubmitNotification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
+    public $discord;
+    public function __construct(DiscordNotification $discord)
     {
-        //
+        $this->discord = $discord;
     }
 
     /**
@@ -28,6 +30,7 @@ class FormSubmitNotification implements ShouldQueue
      */
     public function handle(FormSubmit $event)
     {
-        Mail::to($event->form['email'])->cc('admin@gmail.com')->send(new FormSumitEmail($event->form));
+        Mail::to($event->form['email'])->cc('admin@gmail.com')->send(new FormSubmitEmail($event->form));
+        $this->discord->sendDiscordNotification($event->form);
     }
 }

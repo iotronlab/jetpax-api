@@ -2,6 +2,7 @@
 
 namespace App\Models\Portfolio;
 
+use function Illuminate\Events\queueable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Orchid\Attachment\Attachable;
@@ -20,6 +21,7 @@ class Post extends Model
         'portfolio_id',
         'meta',
         'external_url',
+        'video_url',
         'services',
         'status',
         'order',
@@ -27,8 +29,16 @@ class Post extends Model
 
     protected $casts = [
         'external_url' => 'array',
-        'services' => 'array'
+        'services' => 'array',
+        'video_url' => 'array'
     ];
+
+    protected static function booted()
+    {
+        static::deleted(function ($post) {
+            $post->attachment->each->delete();
+        });
+    }
 
     public function portfolio()
     {
