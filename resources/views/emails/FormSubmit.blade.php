@@ -1,13 +1,13 @@
 @component('mail::message')
-# Introduction
+# You form has been submitted!
 
-Hi, {{ $data['name'] }} Thank you for Form Submit.
+Hi, {{ $data['name'] }} Thank you for contacting us. We will get back to you soon.
 
 @component('mail::table')
-| Your Submited | Form          |
-| ------------- |:-------------:|
-@foreach (json_decode($data,true) as $key=>$value )
-| __{{str_replace("_"," ",ucfirst($key))}} :__          | {{$value}}   |
+| Submited Form |               |
+|:------------- |-------------:|
+@foreach ($data as $key=>$value )
+| __{{str_replace("_"," ",ucfirst($key))}}__          | {{$value}}   |
 @endforeach
 @endcomponent
 
