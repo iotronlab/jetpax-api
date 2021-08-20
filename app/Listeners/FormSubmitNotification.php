@@ -35,6 +35,6 @@ class FormSubmitNotification implements ShouldQueue
 
         $data = Arr::except($event->form->toArray(), ['id', 'created_at', 'updated_at']);
         Mail::to($event->form['email'])->cc('admin@gmail.com')->send(new FormSubmitEmail($data));
-        // $this->discord->sendDiscordNotification($event->form);
+        $this->discord->sendDiscordNotification($event->form);
     }
 }
