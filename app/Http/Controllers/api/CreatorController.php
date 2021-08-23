@@ -34,7 +34,7 @@ class CreatorController extends Controller
         return [
             'followers'     => new FollowersScope(),
             'languages'     => new LanguagesScope(),
-            'categories'    => new CategoriesScope(),
+            'category'    => new CategoriesScope(),
             'social'        => new SocialScope(),
             'budget'        => new BudgetScope()
         ];

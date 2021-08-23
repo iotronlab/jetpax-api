@@ -46,7 +46,7 @@ class PortfolioEditScreen extends Screen
         $this->portfolio = $portfolio;
         if ($this->exists) {
             $this->name = 'Edit your portfolio';
-            $this->description = 'Edit your portfolio details';
+            $this->description = 'Edit your case study details';
             $portfolio->load(['attachment', 'posts']);
         }
 

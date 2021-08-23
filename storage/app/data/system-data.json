@@ -27,5 +27,22 @@
                 "name": "Adobe Lightroom"
             }
         ]
+    },
+    {
+        "name": "Business Services",
+        "options": [
+            {
+                "name": "Influencer Marketing"
+            },
+            {
+                "name": "Social Media Marketing"
+            },
+            {
+                "name": "Digital Marketing"
+            },
+            {
+                "name": "Graphics and Animation"
+            }
+        ]
     }
 ]

@@ -59,7 +59,9 @@ class PortfolioEditLayout extends Rows
                 ]),
 
             Relation::make('portfolio.tools.')->fromModel(SystemDataOption::class, 'name', 'name')
-                ->applyScope('parent', 'tools')->multiple()->title('Tools'),
+                ->applyScope('parent', 'Tools')->multiple()->title('Tools'),
+            Relation::make('portfolio.services.')->fromModel(SystemDataOption::class, 'name', 'name')
+                ->applyScope('parent', 'Business Services')->multiple()->title('Services'),
 
             TextArea::make('portfolio.meta')
                 ->title('Meta Keys')

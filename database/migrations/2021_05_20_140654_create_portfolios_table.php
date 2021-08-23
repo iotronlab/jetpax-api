@@ -24,6 +24,7 @@ class CreatePortfoliosTable extends Migration
             $table->string('meta')->nullable();
             $table->json('external_url')->nullable();
             $table->integer('order')->nullable();
+            $table->json('services')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

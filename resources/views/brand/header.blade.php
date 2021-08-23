@@ -7,10 +7,5 @@
 @endpush
 
 <p class="h2 n-m font-thin v-center">
-   <span class="m-l d-none d-sm-block">
-       JetPax
-        <small class="v-top opacity">Admin</small>
-        <x-orchid-icon path="database"/>
-
-    </span>
+    <img src="{{asset('images/logo/icon.png')}}" class="logo" alt="Jetpax Logo" height="50">&nbsp;
 </p>

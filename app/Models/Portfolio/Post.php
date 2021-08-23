@@ -22,14 +22,12 @@ class Post extends Model
         'meta',
         'external_url',
         'video_url',
-        'services',
         'status',
         'order',
     ];
 
     protected $casts = [
         'external_url' => 'array',
-        'services' => 'array',
         'video_url' => 'array'
     ];
 

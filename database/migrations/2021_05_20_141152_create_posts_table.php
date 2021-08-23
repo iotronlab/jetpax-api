@@ -23,7 +23,6 @@ class CreatePostsTable extends Migration
             $table->json('video_url')->nullable();
             $table->integer('order')->nullable();
             $table->boolean('status')->default(true);
-            $table->json('services')->nullable();
             $table->timestamps();
             $table->foreign('portfolio_id')->references('id')->on('portfolios')->onDelete('cascade')->onUpdate('cascade');
         });
