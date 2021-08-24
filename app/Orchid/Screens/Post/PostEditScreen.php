@@ -32,6 +32,7 @@ class PostEditScreen extends Screen
      *
      * @return array
      */
+    public $exists = false;
     public function query(Post $post): array
     {
         $this->exists = $post->exists;

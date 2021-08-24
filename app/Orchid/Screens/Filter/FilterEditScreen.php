@@ -36,6 +36,7 @@ class FilterEditScreen extends Screen
      *
      * @return array
      */
+    public $exists = false;
     public function query(Filter $filterData): array
     {
         $this->exists = $filterData->exists;

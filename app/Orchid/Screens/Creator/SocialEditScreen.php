@@ -31,7 +31,7 @@ class SocialEditScreen extends Screen
      *
      * @return array
      */
-    //public $socialFilters = null;
+    protected $socialFilters = null;
     public function __construct()
     {
         $this->socialFilters = FilterOption::where('filter_code', 'social')->get()->keyBy('admin_name')->transform(function ($item, $key) {
