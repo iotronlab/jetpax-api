@@ -40,6 +40,7 @@ class PortfolioEditScreen extends Screen
      *
      * @return array
      */
+    public $exists = false;
     public function query(Portfolio $portfolio): array
     {
         $this->exists = $portfolio->exists;

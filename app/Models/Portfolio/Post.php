@@ -18,7 +18,6 @@ class Post extends Model
     protected $fillable = [
         'name',
         'content',
-        'portfolio_id',
         'meta',
         'external_url',
         'video_url',

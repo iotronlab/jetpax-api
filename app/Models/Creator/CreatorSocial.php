@@ -18,7 +18,6 @@ class CreatorSocial extends Model
         'followers',
         'media_count',
         'status',
-        'creator_id'
     ];
 
     public function creator()

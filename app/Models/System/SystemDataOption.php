@@ -11,7 +11,6 @@ class SystemDataOption extends Model
     use HasFactory, AsSource;
     protected $fillable = [
         'name',
-        'system_data_id',
     ];
 
 
