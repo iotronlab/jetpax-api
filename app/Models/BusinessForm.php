@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Orchid\Screen\AsSource;
 
 class BusinessForm extends Model
 {
     // use HasFactory;
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, AsSource;
     protected $fillable = [
         'name',
         'email',

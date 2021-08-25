@@ -1,28 +1,28 @@
 <?php
 
-namespace App\Orchid\Screens\Portfolio;
+namespace App\Orchid\Screens\Forms;
 
-use App\Models\Portfolio\Portfolio;
-use App\Orchid\Layouts\Portfolio\PortfolioListLayout;
+use App\Models\BusinessForm;
 use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
+use Orchid\Screen\TD;
+use Orchid\Support\Facades\Layout;
 
-class PortfolioListScreen extends Screen
+class BusinessFormListScreen extends Screen
 {
     /**
      * Display header name.
      *
      * @var string
      */
-    public $name = 'Portfolio list';
+    public $name = 'BusinessFormListScreen';
 
     /**
      * Display header description.
      *
      * @var string|null
      */
-    public $description = 'List of all your projects/case-studies.';
+    public $description = 'BusinessFormListScreen';
 
     /**
      * Query data.
@@ -32,7 +32,7 @@ class PortfolioListScreen extends Screen
     public function query(): array
     {
         return [
-            'portfolios' => Portfolio::paginate(10)
+            'Form' => BusinessForm::paginate()
         ];
     }
 
@@ -44,16 +44,11 @@ class PortfolioListScreen extends Screen
     public function commandBar(): array
     {
         return [
-            Link::make('Create new Portfolio')
-                ->icon('pencil')
-                ->route('platform.portfolio.edit'),
-
             Button::make('Export file')
                 ->method('export')
                 ->icon('cloud-download')
                 ->rawClick()
                 ->novalidate(),
-
         ];
     }
 
@@ -65,7 +60,18 @@ class PortfolioListScreen extends Screen
     public function layout(): array
     {
         return [
-            PortfolioListLayout::class
+            Layout::table('Form',[
+                TD::make('name'),
+                TD::make('email'),
+                TD::make('business_name', 'Business Name'),
+                TD::make('business_link', 'Business Link'),
+                TD::make('contact'),
+                TD::make('service'),
+                TD::make('budget'),
+                TD::make('details'),
+            ]
+            )
+
         ];
     }
     public function export()
@@ -73,15 +79,15 @@ class PortfolioListScreen extends Screen
 
         return response()->streamDownload(function () {
 
-            $datas = Portfolio::all();
+            $datas = BusinessForm::all();
 
             $data_values = [];
             foreach ($datas as $key => $data) {
-                array_push($data_values, [$data->name, $data->url, $data->client_brief, $data->client_location, $data->project_description, $data->external_url, $data->services, $data->meta, $data->status, $data->order, json_encode($data->tools)]);
+                array_push($data_values, [$data->name, $data->email, $data->business_name, $data->business_link, $data->contact, $data->service, $data->budget, $data->details]);
             };
 
             $csv = tap(fopen('php://output', 'wb'), function ($csv) {
-                fputcsv($csv, ['Name', 'URL', 'Client Brief', 'Client Location', 'Project_Description', 'Extranal', 'Services', 'Meta', 'Status', 'Order', "Tools"]);
+                fputcsv($csv, ['Name', 'Email', 'Business Name', 'Business Link', 'Contact','Services', 'Budget', 'Details']);
             });
 
             collect($data_values)->each(function (array $row) use ($csv) {

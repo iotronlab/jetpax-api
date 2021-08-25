@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\BusinessForm;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
 use App\Orchid\Screens\Examples\ExampleFieldsAdvancedScreen;
@@ -20,6 +21,7 @@ use Tabuna\Breadcrumbs\Trail;
 use App\Orchid\Screens\Creator\CreatorEditScreen;
 use App\Orchid\Screens\Creator\CreatorListScreen;
 use App\Orchid\Screens\Creator\SocialEditScreen;
+use App\Orchid\Screens\EmailSenderListScreen;
 use App\Orchid\Screens\Filter\FilterEditScreen;
 use App\Orchid\Screens\Filter\FilterListScreen;
 use App\Orchid\Screens\Portfolio\PortfolioEditScreen;
@@ -30,7 +32,8 @@ use App\Orchid\Screens\System\SystemDataEditScreen;
 use App\Orchid\Screens\System\SystemDataListScreen;
 
 use App\Orchid\Screens\EmailSenderScreen;
-
+use App\Orchid\Screens\Forms\BusinessFormListScreen;
+use App\Orchid\Screens\Forms\CreatorFormListScreen;
 
 /*
 |--------------------------------------------------------------------------
@@ -164,3 +167,6 @@ Route::screen('email', EmailSenderScreen::class)
             ->parent('platform.index')
             ->push('Email sender');
     });
+
+Route::screen('businessForm',BusinessFormListScreen::class)->name('platform.businessform');
+Route::screen('creatorForm',CreatorFormListScreen::class)->name('platform.creatorform');

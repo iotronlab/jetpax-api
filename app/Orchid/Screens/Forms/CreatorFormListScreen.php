@@ -1,28 +1,28 @@
 <?php
 
-namespace App\Orchid\Screens\Portfolio;
+namespace App\Orchid\Screens\Forms;
 
-use App\Models\Portfolio\Portfolio;
-use App\Orchid\Layouts\Portfolio\PortfolioListLayout;
+use App\Models\CreatorForm;
 use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
+use Orchid\Screen\TD;
+use Orchid\Support\Facades\Layout;
 
-class PortfolioListScreen extends Screen
+class CreatorFormListScreen extends Screen
 {
     /**
      * Display header name.
      *
      * @var string
      */
-    public $name = 'Portfolio list';
+    public $name = 'CreatorFormListScreen';
 
     /**
      * Display header description.
      *
      * @var string|null
      */
-    public $description = 'List of all your projects/case-studies.';
+    public $description = 'CreatorFormListScreen';
 
     /**
      * Query data.
@@ -32,7 +32,7 @@ class PortfolioListScreen extends Screen
     public function query(): array
     {
         return [
-            'portfolios' => Portfolio::paginate(10)
+            'form' => CreatorForm::paginate()
         ];
     }
 
@@ -44,16 +44,11 @@ class PortfolioListScreen extends Screen
     public function commandBar(): array
     {
         return [
-            Link::make('Create new Portfolio')
-                ->icon('pencil')
-                ->route('platform.portfolio.edit'),
-
             Button::make('Export file')
                 ->method('export')
                 ->icon('cloud-download')
                 ->rawClick()
                 ->novalidate(),
-
         ];
     }
 
@@ -65,23 +60,32 @@ class PortfolioListScreen extends Screen
     public function layout(): array
     {
         return [
-            PortfolioListLayout::class
+            Layout::table('form', [
+                TD::make('name'),
+                TD::make('email'),
+                TD::make('profile_name', 'Profile Name'),
+                TD::make('profile_link', 'Profile Link'),
+                TD::make('contact'),
+                TD::make('location'),
+                TD::make('details'),
+            ])
         ];
     }
+
     public function export()
     {
 
         return response()->streamDownload(function () {
 
-            $datas = Portfolio::all();
+            $datas = CreatorForm::all();
 
             $data_values = [];
             foreach ($datas as $key => $data) {
-                array_push($data_values, [$data->name, $data->url, $data->client_brief, $data->client_location, $data->project_description, $data->external_url, $data->services, $data->meta, $data->status, $data->order, json_encode($data->tools)]);
+                array_push($data_values, [$data->name, $data->email, $data->profile_name, $data->profile_link, $data->contact, $data->location, $data->contact, $data->details]);
             };
 
             $csv = tap(fopen('php://output', 'wb'), function ($csv) {
-                fputcsv($csv, ['Name', 'URL', 'Client Brief', 'Client Location', 'Project_Description', 'Extranal', 'Services', 'Meta', 'Status', 'Order', "Tools"]);
+                fputcsv($csv, ['Name', 'Email', 'Profile Name', 'Profile Link', 'Contact', 'Location', 'Details']);
             });
 
             collect($data_values)->each(function (array $row) use ($csv) {
