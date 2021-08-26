@@ -2,11 +2,13 @@
 
 namespace App\Orchid\Screens\Forms;
 
+use App\Helpers\ExcelExport;
 use App\Models\BusinessForm;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 use Orchid\Screen\TD;
 use Orchid\Support\Facades\Layout;
+use Illuminate\Support\Arr;
 
 class BusinessFormListScreen extends Screen
 {
@@ -60,43 +62,26 @@ class BusinessFormListScreen extends Screen
     public function layout(): array
     {
         return [
-            Layout::table('Form',[
-                TD::make('name'),
-                TD::make('email'),
-                TD::make('business_name', 'Business Name'),
-                TD::make('business_link', 'Business Link'),
-                TD::make('contact'),
-                TD::make('service'),
-                TD::make('budget'),
-                TD::make('details'),
-            ]
+            Layout::table(
+                'Form',
+                [
+                    TD::make('name'),
+                    TD::make('email'),
+                    TD::make('business_name', 'Business Name'),
+                    TD::make('business_link', 'Business Link'),
+                    TD::make('contact'),
+                    TD::make('service'),
+                    TD::make('budget'),
+                    TD::make('details'),
+                ]
             )
 
         ];
     }
+
+
     public function export()
     {
-
-        return response()->streamDownload(function () {
-
-            $datas = BusinessForm::all();
-
-            $data_values = [];
-            foreach ($datas as $key => $data) {
-                array_push($data_values, [$data->name, $data->email, $data->business_name, $data->business_link, $data->contact, $data->service, $data->budget, $data->details]);
-            };
-
-            $csv = tap(fopen('php://output', 'wb'), function ($csv) {
-                fputcsv($csv, ['Name', 'Email', 'Business Name', 'Business Link', 'Contact','Services', 'Budget', 'Details']);
-            });
-
-            collect($data_values)->each(function (array $row) use ($csv) {
-                fputcsv($csv, $row);
-            });
-
-            return tap($csv, function ($csv) {
-                fclose($csv);
-            });
-        }, 'File-name.csv');
+        return response()->streamDownload(ExcelExport::export(App\Models\BusinessForm::class, ['id', 'created_at', 'updated_at']), 'test.csv');
     }
 }

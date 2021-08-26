@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens\Forms;
 
 use App\Models\CreatorForm;
+use Illuminate\Support\Arr;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 use Orchid\Screen\TD;
@@ -77,18 +78,22 @@ class CreatorFormListScreen extends Screen
 
         return response()->streamDownload(function () {
 
-            $datas = CreatorForm::all();
+            $datas = CreatorForm::all()->toArray();
 
-            $data_values = [];
-            foreach ($datas as $key => $data) {
-                array_push($data_values, [$data->name, $data->email, $data->profile_name, $data->profile_link, $data->contact, $data->location, $data->contact, $data->details]);
-            };
+            $data_value = [];
+            foreach ($datas as $data) {
+                $except_data = Arr::except($data, ['id', 'created_at', 'updated_at']);
+                $data_value[] = Arr::flatten($except_data);
+            }
+
 
             $csv = tap(fopen('php://output', 'wb'), function ($csv) {
-                fputcsv($csv, ['Name', 'Email', 'Profile Name', 'Profile Link', 'Contact', 'Location', 'Details']);
+                $CreatorObj = new CreatorForm();
+                $fillable_data = $CreatorObj->getFillable();
+                fputcsv($csv, $fillable_data);
             });
 
-            collect($data_values)->each(function (array $row) use ($csv) {
+            collect($data_value)->each(function (array $row) use ($csv) {
                 fputcsv($csv, $row);
             });
 

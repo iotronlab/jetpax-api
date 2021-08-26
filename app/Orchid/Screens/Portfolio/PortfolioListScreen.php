@@ -4,6 +4,7 @@ namespace App\Orchid\Screens\Portfolio;
 
 use App\Models\Portfolio\Portfolio;
 use App\Orchid\Layouts\Portfolio\PortfolioListLayout;
+use Illuminate\Support\Arr;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
@@ -73,18 +74,23 @@ class PortfolioListScreen extends Screen
 
         return response()->streamDownload(function () {
 
-            $datas = Portfolio::all();
+            $datas = Portfolio::all()->toArray();
 
-            $data_values = [];
-            foreach ($datas as $key => $data) {
-                array_push($data_values, [$data->name, $data->url, $data->client_brief, $data->client_location, $data->project_description, $data->external_url, $data->services, $data->meta, $data->status, $data->order, json_encode($data->tools)]);
+            $data_value = [];
+            foreach ($datas as $data) {
+                $except_data = Arr::except($data, ['id', 'created_at', 'updated_at']);
+                $data_value[] = Arr::flatten($except_data);
             };
 
+            
             $csv = tap(fopen('php://output', 'wb'), function ($csv) {
-                fputcsv($csv, ['Name', 'URL', 'Client Brief', 'Client Location', 'Project_Description', 'Extranal', 'Services', 'Meta', 'Status', 'Order', "Tools"]);
+                $BusinessObj = new Portfolio();
+                $fillable_data = $BusinessObj->getFillable();
+
+                fputcsv($csv, $fillable_data);
             });
 
-            collect($data_values)->each(function (array $row) use ($csv) {
+            collect($data_value)->each(function (array $row) use ($csv) {
                 fputcsv($csv, $row);
             });
 
