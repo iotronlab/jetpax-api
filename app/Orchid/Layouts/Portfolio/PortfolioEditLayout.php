@@ -73,8 +73,8 @@ class PortfolioEditLayout extends Rows
                 ->title('Status')
                 ->placeholder('Display Status')->sendTrueOrFalse(),
 
-            Upload::make('portfolio.attachment')->acceptedFiles('image/*')->maxFiles(5)->maxFileSize(10)
-                ->title('Upload Images')->help('Max file size - 300kb')
+            Upload::make('portfolio.attachment')->acceptedFiles('image/*')->maxFiles(5)->maxFileSize(0.512)
+                ->title('Upload Images')->help('Max file size - 512kb')
                 ->horizontal(),
         ];
     }

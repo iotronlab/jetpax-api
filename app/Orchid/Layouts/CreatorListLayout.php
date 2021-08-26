@@ -17,7 +17,7 @@ class CreatorListLayout extends Table
     public $target = 'creators';
 
     /**
-     * @return TD[]
+
      */
     public function columns(): array
     {

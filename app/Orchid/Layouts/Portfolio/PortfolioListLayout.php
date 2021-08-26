@@ -21,7 +21,6 @@ class PortfolioListLayout extends Table
     /**
      * Get the table cells to be displayed.
      *
-     * @return TD[]
      */
     protected function columns(): array
     {

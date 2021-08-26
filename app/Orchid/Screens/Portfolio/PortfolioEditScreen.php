@@ -159,7 +159,6 @@ class PortfolioEditScreen extends Screen
      * @param Portfolio    $portfolio
      * @param Request $request
      *
-     * @return \Illuminate\Http\RedirectResponse
      */
 
     public function createPost(Portfolio $portfolio, Request $request)

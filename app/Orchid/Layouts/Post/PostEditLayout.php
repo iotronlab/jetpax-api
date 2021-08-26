@@ -56,8 +56,8 @@ class PostEditLayout extends Rows
                 ->title('Status')
                 ->placeholder('Display Status')->sendTrueOrFalse(),
 
-            Upload::make('post.attachment')->acceptedFiles('image/*')->maxFiles(5)->maxFileSize(0.3)
-                ->title('Upload Images')->help('Max file size - 300kb')
+            Upload::make('post.attachment')->acceptedFiles('image/*')->maxFiles(5)->maxFileSize(0.512)
+                ->title('Upload Images')->help('Max file size - 512kb')
                 ->horizontal(),
         ];
     }
