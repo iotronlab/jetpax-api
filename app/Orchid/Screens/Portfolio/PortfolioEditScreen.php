@@ -44,7 +44,7 @@ class PortfolioEditScreen extends Screen
     public function query(Portfolio $portfolio): array
     {
         $this->exists = $portfolio->exists;
-        $this->portfolio = $portfolio;
+        // $this->portfolio = $portfolio;
         if ($this->exists) {
             $this->name = 'Edit your portfolio';
             $this->description = 'Edit your case study details';
