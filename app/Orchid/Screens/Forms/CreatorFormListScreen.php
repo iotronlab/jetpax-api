@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Screens\Forms;
 
+use App\Helpers\ExcelExport;
 use App\Models\CreatorForm;
 use Illuminate\Support\Arr;
 use Orchid\Screen\Actions\Button;
@@ -75,31 +76,6 @@ class CreatorFormListScreen extends Screen
 
     public function export()
     {
-
-        return response()->streamDownload(function () {
-
-            $datas = CreatorForm::all()->toArray();
-
-            $data_value = [];
-            foreach ($datas as $data) {
-                $except_data = Arr::except($data, ['id', 'created_at', 'updated_at']);
-                $data_value[] = Arr::flatten($except_data);
-            }
-
-
-            $csv = tap(fopen('php://output', 'wb'), function ($csv) {
-                $CreatorObj = new CreatorForm();
-                $fillable_data = $CreatorObj->getFillable();
-                fputcsv($csv, $fillable_data);
-            });
-
-            collect($data_value)->each(function (array $row) use ($csv) {
-                fputcsv($csv, $row);
-            });
-
-            return tap($csv, function ($csv) {
-                fclose($csv);
-            });
-        }, 'File-name.csv');
+        return response()->streamDownload(ExcelExport::export(new CreatorForm(), ['id', 'created_at', 'updated_at']), 'test.csv');
     }
 }

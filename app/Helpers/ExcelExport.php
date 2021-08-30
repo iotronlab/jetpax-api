@@ -9,7 +9,7 @@ class ExcelExport
 {
     static public function export(Model $model, array $except_collumn)
     {
-dd($model,$except_collumn);
+
         $model_inside  = $model;
         $datas = $model::all()->toArray();
 

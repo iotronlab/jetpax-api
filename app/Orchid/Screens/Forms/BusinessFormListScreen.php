@@ -82,6 +82,7 @@ class BusinessFormListScreen extends Screen
 
     public function export()
     {
-        return response()->streamDownload(ExcelExport::export(App\Models\BusinessForm::class, ['id', 'created_at', 'updated_at']), 'test.csv');
+
+        return response()->streamDownload(ExcelExport::export(new BusinessForm(), ['id', 'created_at', 'updated_at']), 'test.csv');
     }
 }
