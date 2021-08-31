@@ -15,12 +15,13 @@ class PostIndexResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'                      => $this->id,
-            'name'                      => $this->name,
+            'id'                       => $this->id,
+            'name'                     => $this->name,
             'content'                  => $this->content,
-            'external_url'               => $this->external_url,
+            'external_url'             => $this->external_url,
+            'video_url'                => $this->video_url,
             'meta'                     => $this->meta,
-            'images'                    => $this->whenLoaded('attachment'),
+            'images'                   => $this->whenLoaded('attachment'),
         ];
     }
 }

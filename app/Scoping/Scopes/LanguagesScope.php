@@ -9,10 +9,6 @@ class LanguagesScope implements Scope
 {
     public function apply(Builder $builder, $value)
     {
-        // return $builder->whereHas('max_followers', function ($builder) use ($value) {
-
-        //     $builder->whereIn('url', explode(',', $value));
-        // });
-        return $builder->whereJsonContains('languages',explode(',', $value));
+        return $builder->whereJsonContains('languages', explode(',', $value));
     }
 }

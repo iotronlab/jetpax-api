@@ -13,6 +13,7 @@ class CategoriesScope implements Scope
 
         //     $builder->whereIn('url', explode(',', $value));
         // });
+        // return $builder->where('services', 'like', '%' . $value . '%');
         return $builder->whereJsonContains('categories', explode(',', $value));
     }
 }
