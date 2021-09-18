@@ -7,7 +7,7 @@ use App\Models\Portfolio\Post;
 use App\Orchid\Layouts\Portfolio\PortfolioEditLayout;
 use App\Orchid\Layouts\Post\PostEditLayout;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Arr;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
@@ -140,16 +140,21 @@ class PortfolioEditScreen extends Screen
     {
 
         $data = $request->get('portfolio');
-
+        //adding null values if keys don't exist
+        $data = Arr::add($data, 'external_url', null);
+        $data = Arr::add($data, 'services', null);
+        $data = Arr::add($data, 'tools', null);
+        //saving data
         $portfolio->fill($data)->save();
+        //checking for images
         $images = $request->input('portfolio.attachment', []);
-
+        //adding image attachment model relation
         if ($images) {
             $portfolio->attachment()->syncWithoutDetaching(
                 $images
             );
         }
-
+        //alert popup
         Alert::info('You have successfully saved a portfolio.');
 
         return redirect()->route('platform.portfolio.list');

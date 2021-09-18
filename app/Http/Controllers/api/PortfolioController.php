@@ -5,7 +5,9 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Portfolio\PortfolioIndexResource;
 use App\Http\Resources\Portfolio\PortfolioShowResource;
+use App\Http\Resources\Post\PostIndexResource;
 use App\Models\Portfolio\Portfolio;
+use App\Models\Portfolio\Post;
 use App\Scoping\Scopes\ServiceScope;
 use Illuminate\Http\Request;
 
@@ -41,5 +43,11 @@ class PortfolioController extends Controller
     {
         $portfolio->load('attachment', 'posts', 'posts.attachment');
         return new PortfolioShowResource($portfolio);
+    }
+
+    public function getPosts()
+    {
+        $posts = Post::where('status', true)->where('portfolio_id', '=', null)->with('attachment')->paginate(10);
+        return PostIndexResource::collection($posts);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Orchid\Screens\Post;
 use App\Models\Portfolio\Post;
 use App\Orchid\Layouts\Post\PostEditLayout;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Orchid\Screen\Actions\Button;
 
 use Orchid\Screen\Screen;
@@ -97,6 +98,10 @@ class PostEditScreen extends Screen
     public function createOrUpdate(Post $post, Request $request)
     {
         $data = $request->get('post');
+        //adding null values if keys don't exist
+        $data = Arr::add($data, 'external_url', null);
+        $data = Arr::add($data, 'video_url', null);
+        //saving data
         $post->fill($data)->save();
         $images = $request->input('post.attachment', []);
 
