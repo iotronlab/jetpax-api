@@ -12,9 +12,7 @@ use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
-
 use Orchid\Screen\Screen;
-
 use Orchid\Screen\TD;
 use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
@@ -64,6 +62,7 @@ class PortfolioEditScreen extends Screen
     public function commandBar(): array
     {
         return [
+            Link::make('Back')->route('platform.portfolio.list')->icon('arrow-left-circle'),
             Button::make('Create Portfolio')
                 ->icon('pencil')
                 ->method('createOrUpdate')

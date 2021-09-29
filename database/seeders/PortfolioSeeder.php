@@ -6,6 +6,7 @@ use App\Models\Portfolio\Portfolio;
 use App\Models\Portfolio\Post;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+
 class PortfolioSeeder extends Seeder
 {
     /**
@@ -16,9 +17,8 @@ class PortfolioSeeder extends Seeder
     public function run()
     {
         Portfolio::factory()
-                ->times(5)
-                ->has(Post::factory()->count(3),'posts')
-                ->create();
-
+            ->times(40)
+            ->has(Post::factory()->count(3), 'posts')
+            ->create();
     }
 }

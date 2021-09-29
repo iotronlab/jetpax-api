@@ -16,6 +16,7 @@ class PostIndexResource extends JsonResource
     {
         return [
             'id'                       => $this->id,
+            'uuid'                       => $this->uuid,
             'name'                     => $this->name,
             'content'                  => $this->content,
             'external_url'             => $this->external_url,

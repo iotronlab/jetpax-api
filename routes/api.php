@@ -35,6 +35,7 @@ Route::apiResource('portfolios', PortfolioController::class)->only(['index', 'sh
 ]);
 
 Route::get('posts', [PortfolioController::class, "getPosts"]);
+Route::get('posts/{post:uuid}', [PortfolioController::class, "getPost"]);
 
 Route::apiResource('creators', CreatorController::class)->scoped([
     'creator' => 'url',
